@@ -1,11 +1,21 @@
 <template>
   <div class="article">
-    这是文章部分
+    这是文章{{articleId}}
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return {
+      articleId: '0'
+    }
+  },
+  props: ['id'],
+  created(){
+    this.articleId = this.id
+  }
+};
 </script>
 
 <style lang="less">

@@ -1,15 +1,14 @@
 <template>
-  <div class="posts-list">
-    这是博文列表组件
-    <PostsItem/>
+  <div class="tags">
+    这是tags列表组件
   </div>
 </template>
 
 <script>
 import PostsItem from './PostsItem'
 export default {
-  components: {
-    PostsItem
+  component: {
+    
   }
 }
 </script>

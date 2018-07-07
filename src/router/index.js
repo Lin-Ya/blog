@@ -14,54 +14,33 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'Home',
-    //   component: Home,
-    //   children: [
-    //     {
-    //       path: 'mdeditor',
-    //       name: 'MarkdownEditor',
-    //       component: MarkdownEditor
-    //     },{
-    //       path: 'article',
-    //       name: 'Article',
-    //       component: Article
-    //     }
-    //   ]
-    // }
     {
       path: '/',
       name: 'Home',
-      component: Home
-    },
-    {
-      path: '/posts',
-      name: 'Posts',
-      component: Posts,
+      component: Home,
       children: [
         {
-          path: '',
-          name: 'PostsList',
-          component: PostsList
-        },
-        {
-          path: '/article/:id',
-          name: 'Article',
-          component: Article,
-          props: true
-        },
-        {
-          path: 'mdeditor',
-          name: 'Mdeditor',
-          component: MarkdownEditor
-        },
-        {
-          path: 'tags',
-          name: 'Tags',
-          component: Tags
-        }
+              path: '',
+              name: 'PostsList',
+              component: PostsList
+            },
+            {
+              path: '/article/:id',
+              name: 'Article',
+              component: Article,
+              props: true
+            },
+            {
+              path: 'mdeditor',
+              name: 'Mdeditor',
+              component: MarkdownEditor
+            },
+            {
+              path: 'tags',
+              name: 'Tags',
+              component: Tags
+            }
       ]
-    }
+    },
   ]
 })

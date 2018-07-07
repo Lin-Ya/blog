@@ -1,9 +1,12 @@
 <template>
   <div class="home">
-    hello。this is home
-    <Nav/>
-    <Side/>
-    <Posts/>
+    <div class="left">
+      <Side class="side" />
+    </div>
+    <div class="right">
+      <Nav class="nav" />
+      <Posts class="posts" />
+    </div>
   </div>
 </template>
 
@@ -22,8 +25,29 @@ export default {
 </script>
 
 <style lang="less">
+//home layout
 .home {
-  color: red;
-  text-align: center;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .left {
+    width: 88px;
+    height: 100%;
+    .side {
+      height: 100%;
+    }
+  }
+  .right {
+    flex: 1;
+    height: 100%;
+    .nav {
+      height: 104px;
+    }
+    .posts {
+      height: calc(100% - 104px);
+    }
+  }
 }
 </style>

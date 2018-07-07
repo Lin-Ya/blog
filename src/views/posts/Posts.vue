@@ -1,5 +1,5 @@
 <template>
-  <div class="posts">
+  <div>
     this is posts
 
     <router-link :to="{name:'Home'}">Home</router-link>

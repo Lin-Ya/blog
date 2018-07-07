@@ -12,4 +12,7 @@ export default {
 
 <style>
 @import "simplemde/dist/simplemde.min.css";
+html , body , #app {
+  height: 100%;
+}
 </style>

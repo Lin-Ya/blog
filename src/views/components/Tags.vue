@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import PostsItem from './PostsItem'
+import PostsItem from 'views/posts/PostsItem'
 export default {
   component: {
     

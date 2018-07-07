@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home'
-import MarkdownEditor from '@/views/posts/MarkdownEditor'
-import Article from '@/views/posts/Article'
-import Posts from '@/views/posts/Posts'
-import PostsList from '@/views/posts/PostsList'
-import Tags from '@/views/posts/Tags'
+import Home from 'views/Home'
+import MarkdownEditor from 'views/components/MarkdownEditor'
+import Article from 'views/components/Article'
+import Tags from 'views/components/Tags'
+import PostsRcmd from 'views/posts/PostsRcmd'
+import PostsList from 'views/posts/PostsList'
 
 
 
@@ -20,26 +20,31 @@ export default new Router({
       component: Home,
       children: [
         {
-              path: '',
-              name: 'PostsList',
-              component: PostsList
-            },
-            {
-              path: '/article/:id',
-              name: 'Article',
-              component: Article,
-              props: true
-            },
-            {
-              path: 'mdeditor',
-              name: 'Mdeditor',
-              component: MarkdownEditor
-            },
-            {
-              path: 'tags',
-              name: 'Tags',
-              component: Tags
-            }
+          path: '',
+          name: 'Posts',
+          component: PostsRcmd
+        },
+        {
+          path: '/postslist',
+          name: 'PostsList',
+          component: PostsList
+        },
+        {
+          path: '/article/:id',
+          name: 'Article',
+          component: Article,
+          props: true
+        },
+        {
+          path: 'mdeditor',
+          name: 'Mdeditor',
+          component: MarkdownEditor
+        },
+        {
+          path: 'tags',
+          name: 'Tags',
+          component: Tags
+        }
       ]
     },
   ]

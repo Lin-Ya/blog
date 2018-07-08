@@ -2,12 +2,10 @@
   <div>
     <p>This is Nav</p>
     <router-link to="/">Home</router-link>
-
     <router-link :to="{name:'PostsList'}">PostsList</router-link>
-
     <router-link :to="{name:'Tags'}">Tags</router-link>
-
     <router-link :to="{name:'Mdeditor'}">Mdeditor</router-link>
+    <router-link :to="{name:'Account'}">Account</router-link>
   </div>
 </template>
 

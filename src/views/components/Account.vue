@@ -42,8 +42,8 @@ export default {
   data() {
     return {
       formData: {
-        username: null,
-        password: null
+        username: '',
+        password: ''
       },
       actionType: "signUp",
       currentUser: null

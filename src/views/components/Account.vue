@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="logOut" v-else>
-      <p>你好{{this.currentUser.username}}</p>
+      <p>你好</p>
       <button @click="logOut">注销</button>
     </div>
   </div>
@@ -38,12 +38,14 @@
 <script>
 import AV from "@/lib/leancloud/leancloud.js";
 import getAVUser from "@/lib/leancloud/getAVUser.js";
+import store from "@/store/index.js";
 export default {
   data() {
     return {
+      store,
       formData: {
-        username: '',
-        password: ''
+        username: "",
+        password: ""
       },
       actionType: "signUp",
       currentUser: null
@@ -52,38 +54,39 @@ export default {
   methods: {
     signUp() {
       console.log("我要注册啦");
-      var user = new AV.User();
-      user.setUsername(this.formData.username);
-      user.setPassword(this.formData.password);
-      user.signUp().then(
-        function(loginedUser) {
-          console.log(loginedUser);
-        },
-        function(error) {
-          console.log(JSON.stringify(error));
-        }
-      );
-      console.log(user);
+      // var user = new AV.User();
+      // user.setUsername(this.formData.username);
+      // user.setPassword(this.formData.password);
+      // user.signUp().then(
+      //   function(loginedUser) {
+      //     console.log(loginedUser);
+      //   },
+      //   function(error) {
+      //     console.log(JSON.stringify(error));
+      //   }
+      // );
+      // console.log(user);
     },
     logIn() {
       console.log("我要登录啦");
-      var username = this.formData.username;
-      var password = this.formData.password;
-      var _this = this;
-      AV.User.logIn(username, password).then(
-        function(loginedUser) {
-          console.log(loginedUser);
-          _this.currentUser = getAVUser();
-        },
-        function(error) {
-          console.log(JSON.stringify(error));
-        }
-      );
+      this.$store.dispatch('loginUser',this.formData)
+      // var username = this.formData.username;
+      // var password = this.formData.password;
+      // var _this = this;
+      // AV.User.logIn(username, password).then(
+      //   function(loginedUser) {
+      //     _this.currentUser = getAVUser();
+      //   },
+      //   function(error) {
+      //     console.log(JSON.stringify(error));
+      //   }
+      // );
     },
-    logOut(){
-      AV.User.logOut()
-      this.currentUser = null
-      window.location.reload()
+    logOut() {
+      console.log(this.$store);
+      AV.User.logOut();
+      // this.currentUser = null;
+      // window.location.reload()
     }
   }
 };

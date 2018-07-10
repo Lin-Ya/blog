@@ -19,9 +19,6 @@ const mutations = {
     state.isLogin = true
     Object.assign(state.currentUser, getAVUser())
     localStorage.setItem('user', JSON.stringify(state))
-    // state.username = data.username,
-    // state.id = data.id,
-    // state.isLogin = true
   },
 
   [LOGOUT_USER](state) {
@@ -29,7 +26,7 @@ const mutations = {
     state.isLogin = false
     localStorage.setItem('user', JSON.stringify(state))
     console.log('已经退出了')
-    // window.location.reload()
+    window.location.reload()
   }
 }
 

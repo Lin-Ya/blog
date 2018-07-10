@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="formGroup" v-if="!this.$store.state.user.isLogin">
+    <div class="formGroup" v-if="!user.isLogin">
       <div class="switchGroup">
         <label><input type="radio" name="type" v-model="actionType" value="signUp">注册</label>
         <label><input type="radio" name="type" v-model="actionType" value="logIn">登入</label>
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="logOut" v-else>
-      <p>你好 {{this.$store.state.user.currentUser.username}}</p>
+      <p>你好 {{user.currentUser.username}}</p>
       <button @click="logOut">注销</button>
     </div>
   </div>
@@ -40,6 +40,12 @@ import AV from "@/lib/leancloud/leancloud.js";
 import getAVUser from "@/lib/leancloud/getAVUser.js";
 
 export default {
+  //使用计算属性获取store实例中的某个状态
+  computed: {
+    user(){
+      return this.$store.state.user
+    }
+  },
   data() {
     return {
       formData: {
@@ -70,12 +76,7 @@ export default {
       this.$store.dispatch('loginUser',this.formData)
     },
     logOut() {
-      console.log(this.$store);
       this.$store.dispatch('logoutUser')
-      // console.log(getAVUser())
-      // AV.User.logOut();
-      // this.currentUser = null;
-      // window.location.reload()
     }
   },
   created(){

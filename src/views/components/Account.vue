@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="formGroup" v-if="currentUser === null">
+    <div class="formGroup" v-if="!this.$store.state.user.isLogin">
       <div class="switchGroup">
         <label><input type="radio" name="type" v-model="actionType" value="signUp">注册</label>
         <label><input type="radio" name="type" v-model="actionType" value="logIn">登入</label>
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="logOut" v-else>
-      <p>你好</p>
+      <p>你好 {{this.$store.state.user.currentUser.username}}</p>
       <button @click="logOut">注销</button>
     </div>
   </div>
@@ -38,17 +38,15 @@
 <script>
 import AV from "@/lib/leancloud/leancloud.js";
 import getAVUser from "@/lib/leancloud/getAVUser.js";
-import store from "@/store/index.js";
+
 export default {
   data() {
     return {
-      store,
       formData: {
         username: "",
         password: ""
       },
       actionType: "signUp",
-      currentUser: null
     };
   },
   methods: {
@@ -70,23 +68,21 @@ export default {
     logIn() {
       console.log("我要登录啦");
       this.$store.dispatch('loginUser',this.formData)
-      // var username = this.formData.username;
-      // var password = this.formData.password;
-      // var _this = this;
-      // AV.User.logIn(username, password).then(
-      //   function(loginedUser) {
-      //     _this.currentUser = getAVUser();
-      //   },
-      //   function(error) {
-      //     console.log(JSON.stringify(error));
-      //   }
-      // );
     },
     logOut() {
       console.log(this.$store);
-      AV.User.logOut();
+      this.$store.dispatch('logoutUser')
+      // console.log(getAVUser())
+      // AV.User.logOut();
       // this.currentUser = null;
       // window.location.reload()
+    }
+  },
+  created(){
+    let state = localStorage.getItem('user')
+    if(state){
+      state = JSON.parse(state)
+      this.$store.commit('LOGIN_INIT',state)
     }
   }
 };

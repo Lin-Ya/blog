@@ -8,7 +8,12 @@
 import store from '@/store/index'
 export default {
   name: 'App',
-  store
+  store,
+  data(){
+    return {
+      store
+    }
+  }
 }
 </script>
 

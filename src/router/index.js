@@ -39,7 +39,8 @@ export default new Router({
         {
           path: '/mdeditor',
           name: 'Mdeditor',
-          component: MarkdownEditor
+          component: MarkdownEditor,
+          props: true
         },
         {
           path: '/tags',

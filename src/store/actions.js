@@ -22,12 +22,31 @@ const actions = {
   //mdeditor
   //创建新的文章
   newArticle({ commit }) {
-
+    
   },
   editArticle({ commit }) {
 
   },
-  
+  pushArticle({ commit }, article) {
+    // commit(mutations.PUSH_ARTICLE,article)
+    let Posts = new AV.Object('Posts')
+    let Article = new AV.Object('Article')
+    Article.set('title',article.title)
+    Article.set('content', article.content)
+    // Article.set('cover', article.covere)
+    Article.set('tags', article.tags)
+    Article.set('owner', AV.User.current())
+    Article.set('dependent',Posts)
+    Article.save().then(
+      function (res) {
+        console.log(JSON.stringify(res))
+      },
+      function (error) {
+        console.log(JSON.stringify(error))
+      }
+    )
+  },
+
 }
 
 export default actions

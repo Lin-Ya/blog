@@ -23,7 +23,7 @@ export default {
   created() {
     //判断是新建还是编辑
     //如果是新建，则需要检查是否有暂存文章。如果是编辑，则不检查
-    let simplemde = '';
+    let simplemde = "";
     if (!this.isNew) {
       this.editorStatus = "edit";
     } else {
@@ -64,29 +64,36 @@ export default {
   },
   methods: {
     push() {
-      //todo: 增添对文章的校验，是否为空
-      if(!this.article.title.trim()||!this.article.content.trim()||!this.article.tags){
-        console.log('里面有东东是空的，不能发布')
-        return
+      if (!this.$store.state.user.isLogin) {
+        alert("你还没有登录呢");
+        return;
       }
-      let pushData = {}
-      Object.assign(pushData,this.article)
-      pushData.title = pushData.title.trim()
-      pushData.content = pushData.content.trim()
-      pushData.abstract = pushData.content.slice(0,100)
+      if (
+        !this.article.title.trim() ||
+        !this.article.content.trim() ||
+        !this.article.tags
+      ) {
+        alert("你是不是写漏了什么？再检查一下");
+        return;
+      }
+      let pushData = {};
+      Object.assign(pushData, this.article);
+      pushData.title = pushData.title.trim();
+      pushData.content = pushData.content.trim();
+      pushData.abstract = pushData.content.slice(0, 100);
       this.$store.dispatch("pushArticle", pushData);
-      console.log(pushData)
-      this.clear()
+      console.log(pushData);
+      this.clear();
     },
     save() {
       console.log(this.article, "暂存到本地");
       localStorage.setItem("tempArticle", JSON.stringify(this.article));
     },
     clear() {
-      for(let key in this.article){
-        this.article[key] = ''
+      for (let key in this.article) {
+        this.article[key] = "";
       }
-      this.simplemde.value('')
+      this.simplemde.value("");
     }
   }
 };

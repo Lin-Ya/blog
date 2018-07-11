@@ -23,6 +23,7 @@ export default {
   created() {
     //判断是新建还是编辑
     //如果是新建，则需要检查是否有暂存文章。如果是编辑，则不检查
+    let simplemde = '';
     if (!this.isNew) {
       this.editorStatus = "edit";
     } else {
@@ -51,26 +52,42 @@ export default {
   mounted() {
     console.log("进入了md编辑器");
     let _this = this;
-    let simplemde = new Simplemde({
+    this.simplemde = new Simplemde({
       element: document.querySelector("#mdeditor")
     });
-    simplemde.value(this.article.content);
+    this.simplemde.value(this.article.content);
     //嵌入了simplemde，data不显示实时变化。这里使用set来更新data
-    simplemde.codemirror.on("change", function() {
+    this.simplemde.codemirror.on("change", function() {
       // _this.$set(_this.article, "content", simplemde.value());
-      _this.article.content = simplemde.value();
+      _this.article.content = _this.simplemde.value();
     });
   },
   methods: {
     push() {
-      console.log(this.article, "我要发布啦");
-      this.$store.dispatch("pushArticle", this.article);
+      //todo: 增添对文章的校验，是否为空
+      if(!this.article.title.trim()||!this.article.content.trim()||!this.article.tags){
+        console.log('里面有东东是空的，不能发布')
+        return
+      }
+      let pushData = {}
+      Object.assign(pushData,this.article)
+      pushData.title = pushData.title.trim()
+      pushData.content = pushData.content.trim()
+      pushData.abstract = pushData.content.slice(0,100)
+      this.$store.dispatch("pushArticle", pushData);
+      console.log(pushData)
+      this.clear()
     },
     save() {
       console.log(this.article, "暂存到本地");
       localStorage.setItem("tempArticle", JSON.stringify(this.article));
     },
-    clear() {}
+    clear() {
+      for(let key in this.article){
+        this.article[key] = ''
+      }
+      this.simplemde.value('')
+    }
   }
 };
 </script>

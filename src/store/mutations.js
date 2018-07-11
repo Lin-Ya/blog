@@ -9,6 +9,6 @@ export const GET_ARTICLE = 'GET_ARTICLE'
 export const GET_ARTICLE_FAILURE = 'GET_ARTICLE_FAILURE'
 export const CLEAR_ARTICLE = 'CLEAR_ARTICLE'
 export const EDIT_ARTICLE = 'EDIT_ARTICLE'
-export const NEW_ARTICLE = 'NEW_ARTICLE'
+export const PUSH_ARTICLE = 'PUSH_ARTICLE'
 
 

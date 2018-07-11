@@ -1,12 +1,16 @@
 <template>
-  <div class="markdown-editor">
-    <label for="article_title">标题<input id="article_title" type="text" v-model="article.title"></label>
-    <label for="article_cover">封面<input type="file" name="cover" id="article_cover"></label>
-    <label for="article_title">标签<input id="article_tags" type="text" v-model="article.tags"></label>
-    <button id="pushButton" @click="push">发布</button>
-    <button id="saveButton" @click="save">暂存</button>
-
-    <textarea id="mdeditor" @onchange="updateContent(event)"></textarea>
+  <div>
+    <div class="button-group">
+      <button id="pushButton" @click="push">发布</button>
+      <button id="saveButton" @click="save">暂存</button>
+      <button id="clearButton" @click="clear">清空</button>
+    </div>
+    <div class="markdown-editor">
+      <label for="article_title">标题<input id="article_title" type="text" v-model="article.title"></label>
+      <label for="article_cover">封面<input type="file" name="cover" id="article_cover"></label>
+      <label for="article_title">标签<input id="article_tags" type="text" v-model="article.tags"></label>
+      <textarea id="mdeditor" @onchange="updateContent(event)"></textarea>
+    </div>
   </div>
 </template>
 
@@ -17,7 +21,7 @@ export default {
   name: "markdown-editor",
   props: ["isNew"],
   created() {
-    //判断是新建还是编辑 
+    //判断是新建还是编辑
     //如果是新建，则需要检查是否有暂存文章。如果是编辑，则不检查
     if (!this.isNew) {
       this.editorStatus = "edit";
@@ -53,18 +57,20 @@ export default {
     simplemde.value(this.article.content);
     //嵌入了simplemde，data不显示实时变化。这里使用set来更新data
     simplemde.codemirror.on("change", function() {
-      _this.$set(_this.article, "content", simplemde.value());
+      // _this.$set(_this.article, "content", simplemde.value());
+      _this.article.content = simplemde.value();
     });
   },
   methods: {
     push() {
       console.log(this.article, "我要发布啦");
-      this.$store.dispatch("newArticle", this.article);
+      this.$store.dispatch("pushArticle", this.article);
     },
     save() {
       console.log(this.article, "暂存到本地");
       localStorage.setItem("tempArticle", JSON.stringify(this.article));
-    }
+    },
+    clear() {}
   }
 };
 </script>

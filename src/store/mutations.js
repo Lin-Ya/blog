@@ -11,4 +11,6 @@ export const CLEAR_ARTICLE = 'CLEAR_ARTICLE'
 export const EDIT_ARTICLE = 'EDIT_ARTICLE'
 export const PUSH_ARTICLE = 'PUSH_ARTICLE'
 
+//tag
+export const GET_TAGSLIST = 'GET_TAGSLIST'
 

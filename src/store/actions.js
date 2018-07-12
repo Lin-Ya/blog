@@ -27,29 +27,33 @@ const actions = {
   editArticle({ commit }) {
 
   },
-  pushArticle({ commit }, article) {
-    commit(mutations.PUSH_ARTICLE,article)
-    let Article = new AV.Object('Article')
-    
+  pushPost({ commit }, article) {
+    // commit(mutations.PUSH_ARTICLE,article)
+
     //set article存储
+    let Article = new AV.Object('Article')
     Article.set('title',article.title)
     Article.set('content', article.content)
     Article.set('cover', article.cover)
-    Article.set('abstract', article.abstract)
     Article.set('owner', AV.User.current())
-    
     
     //set tags存储
     let TagsGroup = [] 
-    
     article.tags.forEach(element => {
       let Tags = new AV.Object('Tags')
       Tags.set('tag',element)
       TagsGroup.push(Tags)
     });
-    Article.set('dependent',TagsGroup)
-    
-    Article.save().then(
+
+    //set Post存储 使用中间表实现多对多关系
+    let Post = new AV.Object('Post')
+    Post.set('article',Article)
+    Post.set('tags',TagsGroup)
+    Post.set('abstract',article.abstract)
+    Post.set('owner',AV.User.current())
+
+    console.log(Post)
+    Post.save().then(
       function (res) {
         console.log('发布成功')
         console.log(res)

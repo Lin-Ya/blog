@@ -5,8 +5,7 @@ import { GET_ARTICLE, CLEAR_ARTICLE, PUSH_ARTICLE } from '../mutations'
 const state = {
   title: '',
   content: '',
-  cover: '',
-  tags: ''
+  cover: ''
 }
 
 const mutations = {

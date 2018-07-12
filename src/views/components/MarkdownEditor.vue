@@ -60,8 +60,8 @@ export default {
     return {
       article: {
         title: "",
-        tags: [],
         content: "",
+        tags: [],
         cover: ""
       },
       editorStatus: "new"
@@ -73,7 +73,7 @@ export default {
         alert("你还没有登录呢");
         return;
       }
-      // if (
+      // else if (
       //   !this.article.title.trim() ||
       //   !this.article.content.trim() ||
       //   !this.article.tags ||
@@ -82,13 +82,14 @@ export default {
       //   alert("你是不是写漏了什么？再检查一下");
       //   return;
       // }
+
       let pushData = {};
       Object.assign(pushData, this.article);
       pushData.title = pushData.title.trim();
       pushData.content = pushData.content.trim();
       pushData.abstract = pushData.content.slice(0, 100);
-      this.$store.dispatch("pushArticle", pushData);
-      console.log(pushData);
+
+      this.$store.dispatch("pushPost", pushData);
       this.clear();
     },
     save() {
@@ -99,6 +100,7 @@ export default {
       for (let key in this.article) {
         this.article[key] = "";
       }
+      this.article.tags = []
       this.simplemde.value("");
       localStorage.removeItem("tempArticle");
     },
@@ -121,8 +123,8 @@ export default {
     addTags() {
       let tag = this.$refs.tagsInput.value.trim();
       if (tag) {
-        this.article.tags.push(tag)
-        this.$refs.tagsInput.value = ""
+        this.article.tags.push(tag);
+        this.$refs.tagsInput.value = "";
       }
     }
   }

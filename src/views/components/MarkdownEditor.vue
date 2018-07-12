@@ -1,14 +1,21 @@
 <template>
   <div>
+    <!-- 按钮组 -->
     <div class="button-group">
       <button id="pushButton" @click="push">发布</button>
       <button id="saveButton" @click="save">暂存</button>
       <button id="clearButton" @click="clear">清空</button>
     </div>
+    <!-- 文本编辑组 -->
     <div class="markdown-editor">
       <label for="article_title">标题<input id="article_title" type="text" v-model="article.title"></label>
-      <label for="article_cover">封面<input type="file" name="cover" id="article_cover"></label>
-      <label for="article_title">标签<input id="article_tags" type="text" v-model="article.tags"></label>
+      <label for="article_cover">封面<input type="file" name="cover" id="article_cover" @change="uploadImg($event)"></label>
+      <label for="article_tags">标签<input id="article_tags" type="text" ref="tagsInput" @keypress.enter="addTags"></label>
+      <div class="tags_group">
+        <span v-for="index in this.article.tags" :key="index"> {{index}} </span>
+      </div>
+      <!-- 封面 -->
+      <!-- <img :src="this.article.cover"> -->
       <textarea id="mdeditor" @onchange="updateContent(event)"></textarea>
     </div>
   </div>
@@ -38,17 +45,6 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      article: {
-        title: "",
-        tags: "",
-        content: "",
-        cover: ""
-      },
-      editorStatus: "new"
-    };
-  },
   mounted() {
     console.log("进入了md编辑器");
     let _this = this;
@@ -56,11 +52,20 @@ export default {
       element: document.querySelector("#mdeditor")
     });
     this.simplemde.value(this.article.content);
-    //嵌入了simplemde，data不显示实时变化。这里使用set来更新data
     this.simplemde.codemirror.on("change", function() {
-      // _this.$set(_this.article, "content", simplemde.value());
-      _this.article.content = _this.simplemde.value();
+      _this.$set(_this.article, "content", _this.simplemde.value());
     });
+  },
+  data() {
+    return {
+      article: {
+        title: "",
+        tags: [],
+        content: "",
+        cover: ""
+      },
+      editorStatus: "new"
+    };
   },
   methods: {
     push() {
@@ -68,14 +73,15 @@ export default {
         alert("你还没有登录呢");
         return;
       }
-      if (
-        !this.article.title.trim() ||
-        !this.article.content.trim() ||
-        !this.article.tags
-      ) {
-        alert("你是不是写漏了什么？再检查一下");
-        return;
-      }
+      // if (
+      //   !this.article.title.trim() ||
+      //   !this.article.content.trim() ||
+      //   !this.article.tags ||
+      //   !this.article.cover
+      // ) {
+      //   alert("你是不是写漏了什么？再检查一下");
+      //   return;
+      // }
       let pushData = {};
       Object.assign(pushData, this.article);
       pushData.title = pushData.title.trim();
@@ -94,6 +100,30 @@ export default {
         this.article[key] = "";
       }
       this.simplemde.value("");
+      localStorage.removeItem("tempArticle");
+    },
+    uploadImg(e) {
+      let _this = this;
+      let img = e.target.nextElementSibling;
+      let reader = new FileReader();
+      let file = e.target.files[0];
+      if (!file.type.match("image/*")) {
+        alert("上传的图片必须是png、gif、jpg格式哟！");
+        e.target.value = "";
+        return;
+      }
+      reader.readAsDataURL(file);
+      console.log(reader);
+      reader.onload = function(event) {
+        _this.article.cover = event.target.result;
+      };
+    },
+    addTags() {
+      let tag = this.$refs.tagsInput.value.trim();
+      if (tag) {
+        this.article.tags.push(tag)
+        this.$refs.tagsInput.value = ""
+      }
     }
   }
 };

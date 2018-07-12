@@ -30,21 +30,35 @@ const actions = {
   pushArticle({ commit }, article) {
     commit(mutations.PUSH_ARTICLE,article)
     let Article = new AV.Object('Article')
+    
+    //set article存储
     Article.set('title',article.title)
     Article.set('content', article.content)
-    // Article.set('cover', article.covere)
-    Article.set('tags', article.tags)
+    Article.set('cover', article.cover)
     Article.set('abstract', article.abstract)
     Article.set('owner', AV.User.current())
-
+    
+    
+    //set tags存储
+    let TagsGroup = [] 
+    
+    article.tags.forEach(element => {
+      let Tags = new AV.Object('Tags')
+      Tags.set('tag',element)
+      TagsGroup.push(Tags)
+    });
+    Article.set('dependent',TagsGroup)
+    
     Article.save().then(
       function (res) {
         console.log('发布成功')
+        console.log(res)
       },
       function (error) {
         console.log(JSON.stringify(error))
       }
     )
+
   },
 
 }

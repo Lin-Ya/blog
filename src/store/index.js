@@ -4,6 +4,7 @@ import actions from './actions'
 
 // modules
 import user from './modules/user'
+import tag from './modules/tag'
 import article from './modules/article'
 
 Vue.use(Vuex)
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
   actions,
   modules: {
     user,
-    article
+    article,
+    tag
   }
 })
 

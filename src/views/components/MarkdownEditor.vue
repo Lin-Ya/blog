@@ -46,7 +46,6 @@ export default {
     }
   },
   mounted() {
-    console.log("进入了md编辑器");
     let _this = this;
     this.simplemde = new Simplemde({
       element: document.querySelector("#mdeditor")

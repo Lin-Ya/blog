@@ -20,7 +20,10 @@ export default {
     Posts,
     Nav,
     Side
-  }
+  },
+  created() {
+    this.$store.dispatch('getTagsList')
+  },
 };
 </script>
 

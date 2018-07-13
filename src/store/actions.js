@@ -115,10 +115,12 @@ const actions = {
   },
 
   uploadPost({ commit }, postData) {
+    let _this = this
     postData.save().then(
       function (res) {
-        console.log('发布成功')
+        console.log(_this)
         console.log(res)
+        _this.dispatch('getTagsList')
       },
       function (error) {
         console.log(JSON.stringify(error))

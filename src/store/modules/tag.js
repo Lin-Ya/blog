@@ -1,8 +1,6 @@
 import { GET_TAGSLIST } from '../mutations'
 
 const state = {
-  currentArticleTag: [],
-  editingArticleTag: [],
   tagsList: []
 }
 

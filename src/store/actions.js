@@ -21,41 +21,12 @@ const actions = {
   },
 
   //mdeditor
-  //创建新的文章
-  newArticle({ commit }) {
-
-  },
-  editArticle({ commit }) {
-
-  },
-
-  //发布文章
   pushPost({ commit }, article) {
     //缓存待上传的article
     commit(mutations.SET_TEMPPOSTARTICLE, article)
     this.dispatch('filterTags').then(obj => {
       this.dispatch('setPostData', obj)
     })
-  },
-
-  getTagsList({ commit }) {
-    console.log('getTagsList')
-    //获取所有tag
-    var query = new AV.Query('Tags')
-    query.find().then(function (res) {
-      //处理结果，获得一个tagList数组，存到store.state.tag里面
-      let tagList = []
-      for (let i = 0, len = res.length; i < len; i++) {
-        let target = {}
-        target.id = res[i].id
-        target.tag = res[i].attributes.tag
-        tagList.push(target)
-      }
-      commit(mutations.GET_TAGSLIST, tagList)
-
-    }).catch(function (error) {
-      alert(JSON.stringify(error));
-    });
   },
 
   filterTags({ commit, state }) {
@@ -107,11 +78,12 @@ const actions = {
     //set Post存储 使用中间表实现多对多关系
     let Post = new AV.Object('Post')
     Post.set('article', Article)
+    Post.set('title', article.title)
     Post.set('tags', TagsGroup)
     Post.set('abstract', article.abstract)
     Post.set('owner', AV.User.current())
 
-    this.dispatch('uploadPost',Post)
+    this.dispatch('uploadPost', Post)
   },
 
   uploadPost({ commit }, postData) {
@@ -126,7 +98,68 @@ const actions = {
         console.log(JSON.stringify(error))
       }
     )
-  }
+  },
+
+  //tag
+  getTagsList({ commit }) {
+    console.log('getTagsList')
+    //获取所有tag
+    let query = new AV.Query('Tags')
+    query.find().then(function (res) {
+      //处理结果，获得一个tagList数组，存到store.state.tag里面
+      let tagList = []
+      for (let i = 0, len = res.length; i < len; i++) {
+        let tag = {}
+        tag.id = res[i].id
+        tag.tag = res[i].attributes.tag
+        tagList.push(tag)
+      }
+      commit(mutations.GET_TAGSLIST, tagList)
+      return new Promise((resolve, rejects) => {
+        resolve()
+      })
+
+    }).catch(function (error) {
+      alert(JSON.stringify(error));
+    });
+  },
+
+  //post
+  getPostsList({ commit }, inquireKey) {
+    console.log('getPostsList')
+    let config = {
+      //按时间，降序排列
+      condition: 'createdAt',
+      mutationsTypes: 'GET_POSTSLIST'
+    }
+    if (inquireKey) {
+      config.condition = inquireKey
+      config.mutationsTypes = 'GET_POSTSRCMDLIST'
+    }
+
+    //获取所有的post
+    let query = new AV.Query('Post')
+    query.descending(config.condition);
+    query.find().then(function (res) {
+      let postsList = []
+      for (let i = 0, len = res.length; i < len; i++) {
+        let post = {}
+        post.tags = []
+        post.id = res[i].id
+        post.title = res[i].attributes.title
+        post.article = res[i].attributes.article.id
+        res[i].attributes.tags.forEach(tag => {
+          post.tags.push({ id: tag.id })
+        })
+        postsList.push(post)
+      }
+      commit(mutations[config.mutationsTypes],postsList)
+      console.log(res)
+    }).catch(function (error) {
+      alert(JSON.stringify(error))
+    })
+  },
+
 
 }
 

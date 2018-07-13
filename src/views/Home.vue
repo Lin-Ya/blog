@@ -22,8 +22,9 @@ export default {
     Side
   },
   created() {
-    this.$store.dispatch('getTagsList')
-  },
+    let condition ='default'
+    this.$store.dispatch("getTagsList").then(this.$store.dispatch("getPostsList"),condition);
+  }
 };
 </script>
 

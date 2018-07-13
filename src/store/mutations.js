@@ -16,3 +16,6 @@ export const CLEAR_TEMPPOSTARTICLE = 'CLEAR_TEMPPOSTARTICLE'
 //tag
 export const GET_TAGSLIST = 'GET_TAGSLIST'
 
+//post
+export const GET_POSTSLIST = 'GET_POSTSLIST'  //获取默认的postlist
+export const GET_POSTSRCMDLIST = 'GET_POSTSRCMDLIST'  //获取推荐的postlist

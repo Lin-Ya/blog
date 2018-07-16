@@ -23,7 +23,8 @@ export default {
   },
   created() {
     let condition ='default'
-    this.$store.dispatch("getTagsList").then(this.$store.dispatch("getPostsList"),condition);
+    this.$store.dispatch("getTagsList");
+    this.$store.dispatch("getPostsList");
   }
 };
 </script>

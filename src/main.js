@@ -9,6 +9,10 @@ import '@/assets/reset.less'
 
 Vue.config.productionTip = false
 
+import AV from '@/lib/leancloud/leancloud.js';
+Object.defineProperty(Vue.prototype, '$AV', { value: AV });
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

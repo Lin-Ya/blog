@@ -14,19 +14,21 @@ export default {
   props: ["now", "total", "each"],
   data() {
     return {
-      pageNow: this.now
+      
     };
   },
   computed: {
     pageAll() {
       return Math.ceil(this.total / this.each);
+    },
+    pageNow(){
+      return this.now
     }
   },
   methods: {
     changePage: function(page) {
       if (this.pageNow != page) {
-        this.pageNow = page;
-        this.$store.dispatch("setPostsListPage", this.pageNow);
+        this.$store.dispatch("setPostsListPage", page);
       }
     },
     pre: function() {

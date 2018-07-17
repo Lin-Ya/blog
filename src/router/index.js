@@ -31,7 +31,7 @@ export default new Router({
           component: PostsList
         },
         {
-          path: '/article/:id',
+          path: '/article/:title',
           name: 'Article',
           component: Article,
           props: true

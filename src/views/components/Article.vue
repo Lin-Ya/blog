@@ -1,6 +1,6 @@
 <template>
   <div class="article">
-    这是文章{{articleId}}
+    这是文章
   </div>
 </template>
 
@@ -8,12 +8,13 @@
 export default {
   data(){
     return {
-      articleId: '0'
+      article: {}
     }
   },
-  props: ['id'],
+  props: ['post'],
   created(){
-    this.articleId = this.id
+    this.$store.dispatch('getArticle', this.post.articleID).then(this.article = this.$store.state.article)
+    //调用方法给这条post的read增加1
   }
 };
 </script>

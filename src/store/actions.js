@@ -22,10 +22,9 @@ const actions = {
 
   //mdeditor
   pushPost({ commit }, article) {
-    //缓存待上传的article
-    commit(mutations.SET_TEMPPOSTARTICLE, article)
+    
     this.dispatch('filterTags').then(obj => {
-      this.dispatch('setPostData', obj)
+      this.dispatch('setPostData',{obj,article})
     })
   },
 
@@ -45,9 +44,8 @@ const actions = {
     })
   },
 
-  setPostData({ commit, state }, obj) {
-    let article = state.article
-
+  setPostData({ commit, state }, {obj,article}) {
+  
     // set article存储
     let Article = new AV.Object('Article')
     Article.set('title', article.title)
@@ -165,8 +163,21 @@ const actions = {
   },
   setPostsListPage({ commit }, page) {
     commit(mutations.SET_NOWPAGE, page)
-  }
+  },
 
+  //article
+  getArticle({ commit }, articleID) {
+    return new Promise((resolve,reject)=>{
+      let query = new AV.Query('Article')
+      query.get(articleID).then(function (res) {
+        commit(mutations.SET_ARTICLE,res)
+        resolve()
+      }, function (error) {
+        console.log(error)
+        reject()
+      })
+    })
+  }
 
 }
 

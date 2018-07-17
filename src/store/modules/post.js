@@ -10,7 +10,6 @@ const mutations = {
     console.log('这里是post模块的mutations')
     console.log(this)
     state.postsList = payload
-    state.nowPage = 1
   },
   [SET_NOWPAGE](state, page) {
     state.nowPage = page

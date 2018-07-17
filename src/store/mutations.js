@@ -5,8 +5,7 @@ export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE'
 export const LOGOUT_USER = 'LOGOUT_USER'
 
 //article
-export const GET_ARTICLE = 'GET_ARTICLE'
-export const GET_ARTICLE_FAILURE = 'GET_ARTICLE_FAILURE'
+export const SET_ARTICLE = 'SET_ARTICLE'
 export const CLEAR_ARTICLE = 'CLEAR_ARTICLE'
 export const EDIT_ARTICLE = 'EDIT_ARTICLE'
 export const PUSH_ARTICLE = 'PUSH_ARTICLE'

@@ -1,31 +1,27 @@
-import { GET_ARTICLE, CLEAR_ARTICLE, PUSH_ARTICLE, SET_TEMPPOSTARTICLE, CLEAR_TEMPPOSTARTICLE} from '../mutations'
+import { SET_ARTICLE, CLEAR_ARTICLE, PUSH_ARTICLE, SET_TEMPPOSTARTICLE, CLEAR_TEMPPOSTARTICLE} from '../mutations'
 
 
 const state = {
   title: '',
   content: '',
-  cover: '',
-  tags: []
+  tags: [],
 }
 
 const mutations = {
-  [GET_ARTICLE](state) {
-
+  [SET_ARTICLE](state,article) {
+    state.title = article.attributes.title
+    state.content = article.attributes.content
+    state.tags = article.attributes.tags
   },
   [PUSH_ARTICLE](state, payload) {
 
   },
   [CLEAR_ARTICLE](state) {
+    state.title = ''
+    state.content = ''
+    state.tags = []
+  },
 
-  },
-  
-  //用户处理缓存待上传的article,开始筛选tag
-  [SET_TEMPPOSTARTICLE](state,article){
-    Object.assign(state,article)
-  },
-  [CLEAR_TEMPPOSTARTICLE](state){
-    
-  }
 }
 
 export default {

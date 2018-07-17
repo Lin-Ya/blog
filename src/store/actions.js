@@ -123,42 +123,49 @@ const actions = {
 
   // post
   getPostsList({ commit }, inquireKey) {
-    console.log('getPostsList')
-    let config = {
-      //按时间，降序排列
-      condition: 'createdAt',
-      mutationsTypes: 'GET_POSTSLIST'
-    }
-    if (inquireKey) {
-      config.condition = inquireKey
-      config.mutationsTypes = 'GET_POSTSRCMDLIST'
-    }
-
-    //获取所有的post
-    let postsList = []
-    let query = new AV.Query('Post')
-    query.descending(config.condition);
-    query.include('tags')
-    query.find().then(function (res) {
-      for (let i = 0, len = res.length; i < len; i++) {
-        let post = {}
-        post.tags = []
-        post.id = res[i].id
-        post.title = res[i].attributes.title
-        post.cover = res[i].attributes.cover
-        post.abstract = res[i].attributes.abstract
-        post.articleID = res[i].attributes.article.id
-        // debugger
-        res[i].attributes.tags.forEach(tag => {
-          post.tags.push({ id: tag.id, tag: tag.attributes.tag })
-        })
-        postsList.push(post)
+    return new Promise((resolve, reject) => {
+      console.log('getPostsList')
+      let config = {
+        //按时间，降序排列
+        condition: 'createdAt'
       }
-      commit(mutations[config.mutationsTypes], postsList)
-    }).catch(error=>{
-      console.log(JSON.parse(error))
+      if (inquireKey) {
+        config.condition = inquireKey
+      }
+
+      //获取所有的post
+      let postsList = []
+      let query = new AV.Query('Post')
+      query.descending(config.condition);
+      query.include('tags')
+      query.find().then(function (res) {
+        for (let i = 0, len = res.length; i < len; i++) {
+          let post = {}
+          post.tags = []
+          post.id = res[i].id
+          post.title = res[i].attributes.title
+          post.cover = res[i].attributes.cover
+          post.like = res[i].attributes.like
+          post.read = res[i].attributes.read
+          post.abstract = res[i].attributes.abstract
+          post.articleID = res[i].attributes.article.id
+          // debugger
+          res[i].attributes.tags.forEach(tag => {
+            post.tags.push({ id: tag.id, tag: tag.attributes.tag })
+          })
+          postsList.push(post)
+        }
+        commit(mutations.SET_POSTSLIST, postsList)
+        resolve()
+      }).catch(error => {
+        console.log(JSON.parse(error))
+        reject(error)
+      })
     })
   },
+  setPostsListPage({ commit }, page) {
+    commit(mutations.SET_NOWPAGE, page)
+  }
 
 
 }

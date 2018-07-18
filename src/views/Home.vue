@@ -51,6 +51,7 @@ export default {
     }
     .posts {
       height: calc(100% - 104px);
+      overflow: scroll;
     }
   }
 }

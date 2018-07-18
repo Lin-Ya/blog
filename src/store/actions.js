@@ -102,9 +102,7 @@ const actions = {
   getTagsList({ commit }) {
     //获取所有tag
     let query = new AV.Query('Tags')
-    console.log('getTagsList')
     query.find().then(function (res) {
-      console.log(res)
       //处理结果，获得一个tagList数组，存到store.state.tag里面
       let tagList = []
       for (let i = 0, len = res.length; i < len; i++) {
@@ -136,24 +134,9 @@ const actions = {
       let query = new AV.Query('Post')
       query.descending(config.condition);
       query.include('tags')
+      query.include('article')
       query.find().then(function (res) {
-        for (let i = 0, len = res.length; i < len; i++) {
-          let post = {}
-          post.tags = []
-          post.id = res[i].id
-          post.title = res[i].attributes.title
-          post.cover = res[i].attributes.cover
-          post.like = res[i].attributes.like
-          post.read = res[i].attributes.read
-          post.abstract = res[i].attributes.abstract
-          post.articleID = res[i].attributes.article.id
-          // debugger
-          res[i].attributes.tags.forEach(tag => {
-            post.tags.push({ id: tag.id, tag: tag.attributes.tag })
-          })
-          postsList.push(post)
-        }
-        commit(mutations.SET_POSTSLIST, postsList)
+        commit(mutations.SET_POSTSLIST, res)
         resolve()
       }).catch(error => {
         console.log(JSON.parse(error))

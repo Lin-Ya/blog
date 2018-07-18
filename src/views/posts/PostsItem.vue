@@ -9,7 +9,7 @@
         <span> 阅读数：</span> {{this.post.read}}
       </p>
       <ul>
-        <li v-for="item in this.post.tags" :key="item.id">{{item.tag}}</li>
+        <li v-for="item in this.post.tags" :key="item.id">{{item.attributes.tag}}</li>
       </ul>
     </router-link>
   </div>
@@ -21,19 +21,14 @@ export default {
   data() {
     return {
       post: {
-        abstract: "",
-        articleID: "",
-        cover: "",
-        id: "",
-        like: "",
-        read: "",
-        tags: [],
-        title: ""
       }
     };
   },
   created() {
-    Object.assign(this.post, this.propPost);
+    for (let key in this.propPost.attributes) {
+      this.post[key] = this.propPost.attributes[key]
+    }
+    this.post.createdAt = this.propPost.createdAt
   }
 };
 </script>

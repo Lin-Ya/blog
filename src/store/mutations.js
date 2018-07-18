@@ -17,4 +17,5 @@ export const GET_TAGSLIST = 'GET_TAGSLIST'
 
 //post
 export const SET_POSTSLIST = 'SET_POSTSLIST'  //获取默认的postlist
+export const SET_POSTSLIST = 'SET_POSTSLIST'  //设置推荐博文列表
 export const SET_NOWPAGE = 'SET_NOWPAGE' //设置当前页码

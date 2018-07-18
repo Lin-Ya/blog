@@ -21,9 +21,8 @@ export default {
     Nav,
     Side
   },
-  created() {
+  mounted() {
     this.$store.dispatch("getTagsList");
-    // this.$store.dispatch("getPostsList");
   }
 };
 </script>

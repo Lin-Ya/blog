@@ -6,6 +6,7 @@ const state = {
 
 const mutations = {
   [GET_TAGSLIST](state,payload){
+    console.log(payload)
     state.tagsList = payload
   },
   // [UPDATE_EDITINGARTICLETAG](state,payload){

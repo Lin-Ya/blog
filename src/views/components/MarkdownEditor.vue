@@ -16,21 +16,24 @@
       </div>
       <!-- 封面 -->
       <!-- <img :src="this.article.cover"> -->
-      <textarea id="mdeditor" @onchange="updateContent(event)"></textarea>
+      <textarea name="content" id="article_content" placeholder="正文" cols="30" rows="10" v-model="article.content"></textarea>
+    </div>
+    <div class="markdown-preview">
+      <div id="content_preview" class="markdown-body" v-html="previewContent"></div>
     </div>
   </div>
 </template>
 
 <script>
-import Simplemde from "simplemde";
 import marked from "marked";
+import 'github-markdown-css'
 export default {
   name: "markdown-editor",
   props: ["isNew"],
   created() {
     //判断是新建还是编辑
     //如果是新建，则需要检查是否有暂存文章。如果是编辑，则不检查
-    let simplemde = "";
+
     if (!this.isNew) {
       this.editorStatus = "edit";
     } else {
@@ -41,19 +44,10 @@ export default {
         let isKeepTemp = window.confirm("检查到有暂存文章，是否继续编辑？");
         if (isKeepTemp) {
           Object.assign(this.article, tempArticle);
+
         }
       }
     }
-  },
-  mounted() {
-    let _this = this;
-    this.simplemde = new Simplemde({
-      element: document.querySelector("#mdeditor")
-    });
-    this.simplemde.value(this.article.content);
-    this.simplemde.codemirror.on("change", function() {
-      _this.$set(_this.article, "content", _this.simplemde.value());
-    });
   },
   data() {
     return {
@@ -65,6 +59,11 @@ export default {
       },
       editorStatus: "new"
     };
+  },
+  computed: {
+    previewContent(){
+      return marked(this.article.content)
+    }
   },
   methods: {
     push() {
@@ -91,16 +90,17 @@ export default {
       this.$store.dispatch("pushPost", pushData);
       this.clear();
     },
+
     save() {
       console.log(this.article, "暂存到本地");
       localStorage.setItem("tempArticle", JSON.stringify(this.article));
     },
+
     clear() {
       for (let key in this.article) {
         this.article[key] = "";
       }
       this.article.tags = []
-      this.simplemde.value("");
       localStorage.removeItem("tempArticle");
     },
     uploadImg(e) {
@@ -132,11 +132,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.markdown-editor .markdown-body {
-  padding: 0.5em;
-}
-.markdown-editor .editor-preview-active,
-.markdown-editor .editor-preview-active-side {
-  display: block;
-}
+
 </style>

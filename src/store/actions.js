@@ -1,6 +1,7 @@
 import * as mutations from './mutations'
 import AV from "@/lib/leancloud/leancloud.js";
 import { rejects } from 'assert';
+import { debug } from 'util';
 
 
 const actions = {
@@ -22,30 +23,28 @@ const actions = {
 
   //mdeditor
   pushPost({ commit }, article) {
-    
-    this.dispatch('filterTags').then(obj => {
-      this.dispatch('setPostData',{obj,article})
+
+    this.dispatch('filterTags', article.tags).then(obj => {
+      this.dispatch('setPostData', { obj, article })
     })
   },
 
-  filterTags({ commit, state }) {
-    return new Promise((resolve, reject) => {
+  filterTags({ commit, state }, tags) {
+    return new Promise(resolve => {
       let newTagGroup = [], existTagGroup = []  //new存放新的tag，exist存放已有的tag，后面用于绑定
       let tagsList = state.tag.tagsList
-      let article = state.article
       //对标签进行检索，如果是旧标签，就把旧标签的id存放到existTagGroup;如果是新标签，则把tag存放到newTagGroup
-      article.tags.forEach(element => {
+      tags.forEach(tag => {
         let exist = tagsList.find(e => {
-          return e.tag === element
+          return e.attributes.tag === tag
         })
-        exist ? existTagGroup.push(exist.id) : newTagGroup.push(element)
+        exist ? existTagGroup.push(exist.id) : newTagGroup.push(tag)
       });
       resolve({ newTagGroup, existTagGroup })
     })
   },
 
-  setPostData({ commit, state }, {obj,article}) {
-  
+  setPostData({ commit, state }, { obj, article }) {
     // set article存储
     let Article = new AV.Object('Article')
     Article.set('title', article.title)
@@ -91,6 +90,7 @@ const actions = {
         console.log('uploadPost_res')
         console.log(res)
         _this.dispatch('getTagsList')
+        _this.dispatch('getPostsList')
       },
       function (error) {
         console.log(JSON.stringify(error))
@@ -103,15 +103,7 @@ const actions = {
     //获取所有tag
     let query = new AV.Query('Tags')
     query.find().then(function (res) {
-      //处理结果，获得一个tagList数组，存到store.state.tag里面
-      let tagList = []
-      for (let i = 0, len = res.length; i < len; i++) {
-        let tag = {}
-        tag.id = res[i].id
-        tag.tag = res[i].attributes.tag
-        tagList.push(tag)
-      }
-      commit(mutations.GET_TAGSLIST, tagList)
+      commit(mutations.GET_TAGSLIST, res)
     }).catch(function (error) {
       alert(JSON.stringify(error));
     });
@@ -119,24 +111,26 @@ const actions = {
 
   // post
   getPostsList({ commit }, inquireKey) {
+    console.log(inquireKey)
     return new Promise((resolve, reject) => {
       console.log('getPostsList')
       let config = {
         //按时间，降序排列
-        condition: 'createdAt'
+        condition: 'createdAt',
+        mutations: 'SET_POSTSLIST'
       }
       if (inquireKey) {
         config.condition = inquireKey
+        mutations = 'SET_RCMDPOSTSLIST'
       }
 
       //获取所有的post
-      let postsList = []
       let query = new AV.Query('Post')
       query.descending(config.condition);
       query.include('tags')
       query.include('article')
       query.find().then(function (res) {
-        commit(mutations.SET_POSTSLIST, res)
+        commit(mutations[config.mutations], res)
         resolve()
       }).catch(error => {
         console.log(JSON.parse(error))
@@ -150,10 +144,10 @@ const actions = {
 
   //article
   getArticle({ commit }, articleID) {
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
       let query = new AV.Query('Article')
       query.get(articleID).then(function (res) {
-        commit(mutations.SET_ARTICLE,res)
+        commit(mutations.SET_ARTICLE, res)
         resolve()
       }, function (error) {
         console.log(error)

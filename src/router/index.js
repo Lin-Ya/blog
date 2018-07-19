@@ -5,7 +5,6 @@ import MarkdownEditor from 'views/components/MarkdownEditor'
 import Article from 'views/components/Article'
 import Account from 'views/components/Account'
 import Tags from 'views/components/Tags'
-import PostsRcmd from 'views/posts/PostsRcmd'
 import PostsList from 'views/posts/PostsList'
 
 
@@ -22,11 +21,6 @@ export default new Router({
       children: [
         {
           path: '',
-          name: 'Posts',
-          component: PostsRcmd
-        },
-        {
-          path: '/postslist',
           name: 'PostsList',
           component: PostsList
         },

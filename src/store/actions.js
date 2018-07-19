@@ -101,27 +101,25 @@ const actions = {
   //tag
   getTagsList({ commit }) {
     //获取所有tag
-    let query = new AV.Query('Tags')
-    query.find().then(function (res) {
-      commit(mutations.GET_TAGSLIST, res)
-    }).catch(function (error) {
-      alert(JSON.stringify(error));
-    });
+    return new Promise((resolve,reject)=>{
+      let query = new AV.Query('Tags')
+      query.find().then(function (res) {
+        commit(mutations.GET_TAGSLIST, res)
+        resolve()
+      }).catch(function (error) {
+        alert(JSON.stringify(error));
+      });
+    })
   },
 
   // post
-  getPostsList({ commit }, inquireKey) {
-    console.log(inquireKey)
+  getPostsList({ commit }) {
     return new Promise((resolve, reject) => {
       console.log('getPostsList')
       let config = {
         //按时间，降序排列
         condition: 'createdAt',
         mutations: 'SET_POSTSLIST'
-      }
-      if (inquireKey) {
-        config.condition = inquireKey
-        mutations = 'SET_RCMDPOSTSLIST'
       }
 
       //获取所有的post

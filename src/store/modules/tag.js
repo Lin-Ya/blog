@@ -14,6 +14,12 @@ const mutations = {
   // }
 }
 
+const getters = {
+  tagsList(state){
+    return state.tagsList
+  }
+}
+
 export default {
-  state, mutations
+  state, mutations, getters
 }

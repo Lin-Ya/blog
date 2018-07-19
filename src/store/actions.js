@@ -113,7 +113,7 @@ const actions = {
   },
 
   // post
-  getPostsList({ commit }) {
+  getPostsList({ commit },targetTagId) {
     return new Promise((resolve, reject) => {
       console.log('getPostsList')
       let config = {
@@ -127,6 +127,10 @@ const actions = {
       query.descending(config.condition);
       query.include('tags')
       query.include('article')
+      if(targetTagId){
+        var targetTag = AV.Object.createWithoutData('Tags', targetTagId)
+        query.equalTo('tags', targetTag)
+      }
       query.find().then(function (res) {
         commit(mutations[config.mutations], res)
         resolve()

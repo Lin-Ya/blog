@@ -38,7 +38,7 @@ export default {
       article: {}
     };
   },
-  props: ["post"],
+  props: ['post','title'],
   created() {
     for (let key in this.post.article.attributes) {
       this.article[key] = this.post.article.attributes[key];

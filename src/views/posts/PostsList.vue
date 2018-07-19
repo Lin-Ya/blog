@@ -2,7 +2,7 @@
   <div class="posts-list">
     这是博文列表组件
     <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post"/>
-    <Paging ref="Paging" :now="this.$store.getters.now" :total="this.$store.getters.totalPost" :each="3"/>
+    <Paging ref="Paging" :now="this.$store.getters.nowPost" :total="this.$store.getters.totalPost" :each="3"/>
   </div>
 </template>
 

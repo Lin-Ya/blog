@@ -20,7 +20,7 @@ const getters = {
   totalPost(state) {
     return state.postsList.length
   },
-  now(state) {
+  nowPost(state) {
     return state.nowPage
   },
   //返回当前页面显示的3个post数组

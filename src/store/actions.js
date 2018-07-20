@@ -133,9 +133,9 @@ const actions = {
       }
       query.find().then(function (res) {
         commit(mutations[config.mutations], res)
-        resolve()
+        resolve(res)
       }).catch(error => {
-        console.log(JSON.parse(error))
+        alert(JSON.parse(error))
         reject(error)
       })
     })

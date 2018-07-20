@@ -17,7 +17,7 @@
 <script>
 import PostsItem from "views/posts/PostsItem";
 import TagsButton from "views/components/TagsButton";
-import PostsList from 'views/posts/PostsList'
+import PostsList from "views/posts/PostsList";
 
 export default {
   components: {
@@ -25,8 +25,22 @@ export default {
     TagsButton,
     PostsList
   },
+  props: ["targetTagID"],
   data() {
     return {};
+  },
+  created() {
+    // this.targetTagID
+    //   ? this.getTargetPost(this.tagsList)
+    //   : this.getTargetPost(this.tagsList[4].id);
+    if(this.targetTagID){
+      this.getTargetPost(this.targetTagID)
+    }else {
+      while (this.tagsList.length>0) {
+        this.getTargetPost(this.tagsList[4].id);
+        break
+      }
+    }
   },
   computed: {
     tagsList() {

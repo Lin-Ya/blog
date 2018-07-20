@@ -13,8 +13,7 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch("getTagsList");
-    this.$store.dispatch("getPostsList");
+    this.$store.dispatch("initState");
   }
 };
 </script>

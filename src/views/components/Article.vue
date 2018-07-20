@@ -4,6 +4,9 @@
       <div id="article_tagsList">
         <TagsButton v-for="tagItem in this.post.tags" :key="tagItem.id" :propTag="tagItem" @getPostByTag="linkToTags($event)" />
       </div>
+      <div>
+        <button class="article-editor" v-if="this.article.owner.id === this.currentUserID">编辑</button>
+      </div>
       <div id="article_title">
         <h1>{{this.article.title}}</h1>
       </div>
@@ -57,6 +60,11 @@ export default {
     document.getElementById("article_content").innerHTML = marked(
       this.article.content
     );
+  },
+  computed: {
+    currentUserID(){
+      return this.$store.state.user.currentUser.id
+    }
   },
   methods: {
     linkToTags(targetTagID) {

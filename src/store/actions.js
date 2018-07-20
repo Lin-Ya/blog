@@ -5,6 +5,16 @@ import { debug } from 'util';
 
 
 const actions = {
+  //init 
+  initState({ commit }) {
+    let state = localStorage.getItem('user')
+    if (state) {
+      state = JSON.parse(state)
+      commit('LOGIN_INIT', state)
+    }
+    this.dispatch('getTagsList')
+    this.dispatch('getPostsList')
+  },
   //user
   loginUser({ commit }, formData) {
     AV.User.logIn(formData.username, formData.password).then(
@@ -101,7 +111,7 @@ const actions = {
   //tag
   getTagsList({ commit }) {
     //获取所有tag
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
       let query = new AV.Query('Tags')
       query.find().then(function (res) {
         commit(mutations.GET_TAGSLIST, res)
@@ -113,7 +123,7 @@ const actions = {
   },
 
   // post
-  getPostsList({ commit },targetTagId) {
+  getPostsList({ commit }, targetTagId) {
     return new Promise((resolve, reject) => {
       console.log('getPostsList')
       let config = {
@@ -127,7 +137,7 @@ const actions = {
       query.descending(config.condition);
       query.include('tags')
       query.include('article')
-      if(targetTagId){
+      if (targetTagId) {
         var targetTag = AV.Object.createWithoutData('Tags', targetTagId)
         query.equalTo('tags', targetTag)
       }

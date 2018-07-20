@@ -78,13 +78,6 @@ export default {
     logOut() {
       this.$store.dispatch('logoutUser')
     }
-  },
-  created(){
-    let state = localStorage.getItem('user')
-    if(state){
-      state = JSON.parse(state)
-      this.$store.commit('LOGIN_INIT',state)
-    }
   }
 };
 </script>

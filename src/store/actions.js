@@ -33,7 +33,6 @@ const actions = {
 
   //mdeditor
   pushPost({ commit }, article) {
-
     this.dispatch('filterTags', article.tags).then(obj => {
       this.dispatch('setPostData', { obj, article })
     })
@@ -56,7 +55,7 @@ const actions = {
 
   setPostData({ commit, state }, { obj, article }) {
     // set article存储
-    let Article = new AV.Object('Article')
+    let Article = article.id?AV.Object.createWithoutData('Article',article.id):new AV.Object('Article')
     Article.set('title', article.title)
     Article.set('tags', article.tags)
     Article.set('content', article.content)
@@ -80,7 +79,8 @@ const actions = {
     }
 
     //set Post存储 使用中间表实现多对多关系
-    let Post = new AV.Object('Post')
+    let Post = article.postID ? AV.Object.createWithoutData('Post', article.postID) : new AV.Object('Post')
+    debugger
     Post.set('article', Article)
     Post.set('tags', TagsGroup)
     Post.set('title', article.title)

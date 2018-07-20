@@ -29,13 +29,14 @@ import marked from "marked";
 import 'github-markdown-css'
 export default {
   name: "markdown-editor",
-  props: ["isNew"],
+  props: ["updateData"],
   created() {
     //判断是新建还是编辑
     //如果是新建，则需要检查是否有暂存文章。如果是编辑，则不检查
 
-    if (!this.isNew) {
+    if (this.updateData) {
       this.editorStatus = "edit";
+      Object.assign(this.article,this.updateData.oldArticle)
     } else {
       //判断是否有暂存文章
       let tempArticle = localStorage.getItem("tempArticle");
@@ -44,7 +45,6 @@ export default {
         let isKeepTemp = window.confirm("检查到有暂存文章，是否继续编辑？");
         if (isKeepTemp) {
           Object.assign(this.article, tempArticle);
-
         }
       }
     }
@@ -86,6 +86,11 @@ export default {
       pushData.title = pushData.title.trim();
       pushData.content = pushData.content.trim();
       pushData.abstract = pushData.content.slice(0, 100);
+      if(this.updateData){
+        pushData.postID = this.updateData.postID
+      }else {
+        pushData.postID = ''
+      }
 
       this.$store.dispatch("pushPost", pushData);
       this.clear();

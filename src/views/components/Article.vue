@@ -5,7 +5,7 @@
         <TagsButton v-for="tagItem in this.post.tags" :key="tagItem.id" :propTag="tagItem" @getPostByTag="linkToTags($event)" />
       </div>
       <div>
-        <button class="article-editor" v-if="this.article.owner.id === this.currentUserID">编辑</button>
+        <button class="article-editor" v-if="this.article.owner.id === this.currentUserID" @click="linkToMarkDownEditor">编辑</button>
       </div>
       <div id="article_title">
         <h1>{{this.article.title}}</h1>
@@ -62,13 +62,23 @@ export default {
     );
   },
   computed: {
-    currentUserID(){
-      return this.$store.state.user.currentUser.id
+    currentUserID() {
+      return this.$store.state.user.currentUser.id;
     }
   },
   methods: {
     linkToTags(targetTagID) {
       this.$router.push({ name: "Tags", params: { targetTagID: targetTagID } });
+    },
+    linkToMarkDownEditor() {
+      let updateData = {
+        postID: this.post.id||'',
+        oldArticle: this.article
+      }
+      this.$router.push({
+        name: "Mdeditor",
+        params: { updateData }
+      });
     }
   }
 };

@@ -5,21 +5,25 @@
 </template>
 
 <script>
-import store from '@/store/index'
 export default {
-  name: 'App',
-  store,
-  data(){
+  name: "App",
+  data() {
     return {
-      store
-    }
+      store: this.$store
+    };
+  },
+  created() {
+    this.$store.dispatch("getTagsList");
+    this.$store.dispatch("getPostsList");
   }
-}
+};
 </script>
 
 <style>
 @import "simplemde/dist/simplemde.min.css";
-html , body , #app {
+html,
+body,
+#app {
   height: 100%;
 }
 </style>

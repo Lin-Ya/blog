@@ -11,7 +11,7 @@ import PostsList from 'views/posts/PostsList'
 
 Vue.use(Router)
 
-export default new Router({
+const router =  new Router({
   mode: 'history',
   routes: [
     {
@@ -39,7 +39,8 @@ export default new Router({
         {
           path: '/tags',
           name: 'Tags',
-          component: Tags
+          component: Tags,
+          props: true
         },
         {
           path: '/account',
@@ -50,3 +51,5 @@ export default new Router({
     },
   ]
 })
+
+export default router

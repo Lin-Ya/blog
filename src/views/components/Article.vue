@@ -1,6 +1,9 @@
 <template>
   <div class="article-wrap">
     <div class="article">
+      <div id="article_tagsList">
+        <TagsButton v-for="tagItem in this.post.tags" :key="tagItem.id" :propTag="tagItem" @getPostByTag="linkToTags($event)" />
+      </div>
       <div id="article_title">
         <h1>{{this.article.title}}</h1>
       </div>
@@ -12,9 +15,10 @@
 <script>
 import marked from "marked";
 import hljs from "highlight.js";
+import TagsButton from "views/components/TagsButton";
 import "@/assets/atom-one-dark.css";
 
-hljs.initHighlightingOnLoad()
+hljs.initHighlightingOnLoad();
 let myRenderer = new marked.Renderer();
 marked.setOptions({
   renderer: myRenderer,
@@ -33,12 +37,15 @@ marked.setOptions({
   }
 });
 export default {
+  components: {
+    TagsButton
+  },
   data() {
     return {
       article: {}
     };
   },
-  props: ['post','title'],
+  props: ["post", "title"],
   created() {
     for (let key in this.post.article.attributes) {
       this.article[key] = this.post.article.attributes[key];
@@ -50,6 +57,11 @@ export default {
     document.getElementById("article_content").innerHTML = marked(
       this.article.content
     );
+  },
+  methods: {
+    linkToTags(targetTagID) {
+      this.$router.push({ name: "Tags", params: { targetTagID: targetTagID } });
+    }
   }
 };
 </script>

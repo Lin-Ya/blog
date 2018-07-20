@@ -21,8 +21,10 @@ export default {
     Nav,
     Side
   },
-  mounted() {
-    this.$store.dispatch("getTagsList");
+  data(){
+    return {
+      
+    }
   }
 };
 </script>

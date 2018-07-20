@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from '@/store/index'
 
 import 'normalize.css'
 import '@/assets/reset.less'
@@ -17,6 +18,7 @@ Object.defineProperty(Vue.prototype, '$AV', { value: AV });
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

@@ -25,7 +25,7 @@ const router =  new Router({
           component: PostsList
         },
         {
-          path: '/article/:title',
+          path: '/article/:postID',
           name: 'Article',
           component: Article,
           props: true

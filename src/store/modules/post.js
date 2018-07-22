@@ -1,9 +1,10 @@
-import { SET_POSTSLIST, SET_NOWPAGE } from '../mutations'
+import { SET_POSTSLIST, SET_CURRENTPOST,SET_NOWPAGE } from '../mutations'
 
 const state = {
   postsList: [],
   nowPage: 1,
-  offset: 3
+  offset: 3,
+  currentPost:{}  //用于存放当前浏览的post
 }
 
 const mutations = {
@@ -13,6 +14,9 @@ const mutations = {
   },
   [SET_NOWPAGE](state, page) {
     state.nowPage = page
+  },
+  [SET_CURRENTPOST](state,payload){
+    state.currentPost = payload
   }
 }
 
@@ -24,10 +28,20 @@ const getters = {
     return state.nowPage
   },
   //返回当前页面显示的3个post数组
-  currentPostsList(state, getters) {
+  getCurrentPostsList(state) {
     let begin = (state.nowPage - 1) * 3
     return state.postsList.slice(begin, begin + 3)
   },
+  //返回当前页面请求的post博文
+  getCurrentPost(state){
+    let post = {}
+    for(let key in state.currentPost.attributes){
+      post[key] = state.currentPost.attributes[key]
+    }
+    post.id = state.currentPost.id
+    post.createdAt = state.currentPost.createdAt
+    return post
+  }
 
 }
 

@@ -55,7 +55,7 @@ const actions = {
 
   setPostData({ commit, state }, { obj, article }) {
     // set article存储
-    let Article = article.id?AV.Object.createWithoutData('Article',article.id):new AV.Object('Article')
+    let Article = article.id ? AV.Object.createWithoutData('Article', article.id) : new AV.Object('Article')
     Article.set('title', article.title)
     Article.set('tags', article.tags)
     Article.set('content', article.content)
@@ -123,7 +123,20 @@ const actions = {
   },
 
   // post
-  getPostsList({ commit }, targetTagId) {
+  getCurrentPost({ commit }, targetPostID) {
+    return new Promise((resolve, reject) => {
+      let query = new AV.Query('Post')
+      query.include('tags')
+      query.include('article')
+      query.get(targetPostID).then(res => {
+        resolve(res)
+      }).catch(error => {
+        alert(JSON.parse(error))
+        reject(error)
+      })
+    })
+  },
+  getPostsList({ commit }, targetTagID) {
     return new Promise((resolve, reject) => {
       console.log('getPostsList')
       let config = {
@@ -137,8 +150,10 @@ const actions = {
       query.descending(config.condition);
       query.include('tags')
       query.include('article')
-      if (targetTagId) {
-        var targetTag = AV.Object.createWithoutData('Tags', targetTagId)
+
+      //targetTagID可选。当存在的时候，则是用于筛选带tag的post
+      if (targetTagID) {
+        var targetTag = AV.Object.createWithoutData('Tags', targetTagID)
         query.equalTo('tags', targetTag)
       }
       query.find().then(function (res) {
@@ -153,20 +168,23 @@ const actions = {
   setPostsListPage({ commit }, page) {
     commit(mutations.SET_NOWPAGE, page)
   },
+  setCurrentPost({ commit }, currentPost) {
+    commit(mutations.SET_CURRENTPOST, currentPost)
+  }
 
   //article
-  getArticle({ commit }, articleID) {
-    return new Promise((resolve, reject) => {
-      let query = new AV.Query('Article')
-      query.get(articleID).then(function (res) {
-        commit(mutations.SET_ARTICLE, res)
-        resolve()
-      }, function (error) {
-        console.log(error)
-        reject()
-      })
-    })
-  }
+  // getArticle({ commit }, articleID) {
+  //   return new Promise((resolve, reject) => {
+  //     let query = new AV.Query('Article')
+  //     query.get(articleID).then(function (res) {
+  //       commit(mutations.SET_ARTICLE, res)
+  //       resolve()
+  //     }, function (error) {
+  //       console.log(error)
+  //       reject()
+  //     })
+  //   })
+  // }
 
 }
 

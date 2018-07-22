@@ -22,7 +22,7 @@ export default {
   created() {},
   computed: {
     postsList() {
-      return this.$store.getters.currentPostsList;
+      return this.$store.getters.getCurrentPostsList;
     }
   },
   methods: {

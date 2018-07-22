@@ -80,7 +80,6 @@ const actions = {
 
     //set Post存储 使用中间表实现多对多关系
     let Post = article.postID ? AV.Object.createWithoutData('Post', article.postID) : new AV.Object('Post')
-    debugger
     Post.set('article', Article)
     Post.set('tags', TagsGroup)
     Post.set('title', article.title)

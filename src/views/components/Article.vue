@@ -76,9 +76,10 @@ export default {
     },
     linkToMarkDownEditor() {
       let updateData = {
-        postID: this.post.id || "",
-        oldArticle: this.article
+        postID: this.postID,
+        oldArticle: this.currentPost.article.attributes
       };
+      updateData.oldArticle.id = this.currentPost.article.id
       this.$router.push({
         name: "Mdeditor",
         params: { updateData }

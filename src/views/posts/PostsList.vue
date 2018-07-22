@@ -41,6 +41,7 @@ export default {
   display: inline-block;
   margin-right: 10px;
 }
+//过度动画
 .list-enter-active,
 .list-leave-active {
   transition: all 1s;

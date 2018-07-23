@@ -56,4 +56,9 @@ export default {
     }
   }
 }
+@media (max-width: 768px){
+  .slide {
+    display: none;
+  }
+}
 </style>

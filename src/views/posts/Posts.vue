@@ -1,7 +1,6 @@
 <template>
   <div>
-    this is posts
-      <router-view/>
+    <router-view/>
   </div>
 </template>
 

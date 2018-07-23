@@ -1,5 +1,5 @@
 <template>
-  <div class="tag-wrap">
+  <div class="tag-wrapper">
     <button @click="getPostByTag">{{this.tag.attributes.tag}}</button>
   </div>
 </template>

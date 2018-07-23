@@ -1,6 +1,5 @@
 <template>
-  <div class="postsList-wrap">
-    这是博文列表组件
+  <div class="postsList-wrapper">
     <transition-group name="list" class="posts-list">
       <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
     </transition-group>

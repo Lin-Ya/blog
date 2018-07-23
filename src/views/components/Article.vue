@@ -1,5 +1,5 @@
 <template>
-  <div class="article-wrap">
+  <div class="article-wrapper">
     <div class="article">
       <div id="article_tagsList">
         <TagsButton v-for="tagItem in this.currentPost.tags" :key="tagItem.id" :propTag="tagItem" @getPostByTag="linkToTags($event)" />

@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <div class="left">
-      <Side class="side" />
+    <div class="slide">
+      <Side class="side-wrapper" />
     </div>
-    <div class="right">
-      <Nav class="nav" />
-      <Posts class="posts" />
+    <div class="main-wrapper">
+      <Nav class="nav-wrapper" />
+      <Posts class="posts-wrapper" />
     </div>
   </div>
 </template>
@@ -37,20 +37,20 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  .left {
+  .slide {
     width: 88px;
     height: 100%;
-    .side {
+    .side-wrapper {
       height: 100%;
     }
   }
-  .right {
+  .main-wrapper {
     flex: 1;
     height: 100%;
-    .nav {
+    .nav-wrapper {
       height: 104px;
     }
-    .posts {
+    .posts-wrapper {
       height: calc(100% - 104px);
       overflow: scroll;
     }

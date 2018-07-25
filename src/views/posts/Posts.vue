@@ -23,6 +23,6 @@ export default {
 
 <style lang="less">
 .post-wrapper {
-  height: 100%;
+  height: calc(100vh - 104px);
 }
 </style>

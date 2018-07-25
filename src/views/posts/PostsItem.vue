@@ -1,18 +1,6 @@
 <template>
   <div>
     <div class="post-item" @click="setTargetPost">
-      <!-- <div class="post-item">
-        <div class="post-img">
-          <img :src="this.post.attributes.cover" alt="cover">
-          <p>{{this.post.attributes.abstract}}</p>
-        </div>
-        <div class="post-detail">
-          <h2>{{this.post.attributes.title}}</h2>
-          <p>Written by
-            <span>Feng HuiWing {{this.post.createdAt}}</span>
-          </p>
-        </div>
-      </div> -->
       <div class="post-item-tag">
         <span v-for="item in this.post.attributes.tags" :key="item.id">{{item.attributes.tag}}</span>
       </div>
@@ -24,13 +12,16 @@
       </div>
       <img class="post-item-cover" :src="this.post.attributes.cover">
       <div class="post-item-createdAt">
-        <span>{{this.post.createdAt}}</span>
+        <span>{{this.getHandledDate}}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
+moment.locale("en");
+
 export default {
   props: ["propPost"],
   data() {
@@ -49,6 +40,11 @@ export default {
         name: "Article",
         params: { post: this.post, postID: this.post.id }
       });
+    }
+  },
+  computed: {
+    getHandledDate() {
+      return moment(this.post.createdAt).format("MMMM Do YYYY, h:mm:ss a");
     }
   }
 };

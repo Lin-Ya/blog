@@ -1,8 +1,10 @@
 <template>
   <div class="postsList-wrapper">
-    <transition-group name="list" class="posts-list">
-      <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
-    </transition-group>
+    <div>
+      <transition-group name="list" class="posts-list">
+        <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
+      </transition-group>
+    </div>
     <Paging ref="Paging" :now="this.$store.getters.nowPost" :total="this.$store.getters.totalPost" :each="3" />
   </div>
 </template>

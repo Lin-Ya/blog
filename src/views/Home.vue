@@ -1,23 +1,27 @@
 <template>
   <div class="home">
-    <Side class="side-wrapper" />
-    <div class="main-wrapper">
+    <header>
       <Nav class="nav-wrapper" />
+    </header>
+    <main>
       <Posts class="posts-wrapper" />
-    </div>
+    </main>
+    <footer>
+      <Footer class="footer-wrapper" />
+    </footer>
   </div>
 </template>
 
 <script>
 import Posts from "views/posts/Posts";
 import Nav from "views/components/Nav";
-import Side from "views/components/Side";
+import Footer from "views/components/Footer";
 
 export default {
   components: {
     Posts,
     Nav,
-    Side
+    Footer
   },
   data() {
     return {};
@@ -34,36 +38,26 @@ export default {
   overflow: hidden;
 }
 //home layout
-.home {
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  .side-wrapper {
-    width: 88px;
-    height: 100%;
-  }
-  .main-wrapper {
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
+@media (min-width: 769px) {
+  .home {
+    header {
+      height: 80px;
+      &.fixed {
+        position: fixed;
+      }
+    }
+    main {
+      border: 1px solid red;
+    }
+    footer {
+      height: 24px;
+    }
   }
 }
 @media (max-width: 768px) {
-  .side-wrapper {
-    display: none;
-  }
-  .main-wrapper {
-    flex: 1;
-    height: 100%;
-    .nav-wrapper {
-      min-height: 56px;
-      margin-bottom: 8px;
-    }
-    .posts-wrapper {
-      height: calc(100vh - 56px);
-    }
+  .home {
+    width: 100%;
+    overflow: hidden;
   }
 }
 </style>

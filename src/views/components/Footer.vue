@@ -1,6 +1,6 @@
 <template>
   <div>
-    This is Side
+    This is footer
   </div>
 </template>
 
@@ -11,7 +11,5 @@ export default {
 </script>
 
 <style lang="less">
-.side {
-  border: 1px solid blue;
-}
+
 </style>

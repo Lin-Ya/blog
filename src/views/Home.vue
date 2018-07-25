@@ -40,6 +40,8 @@ export default {
 //home layout
 @media (min-width: 769px) {
   .home {
+    font-size: 16px;
+    line-height: 16px;
     header {
       height: 80px;
       &.fixed {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link :to="{name: 'Article', params: {post: this.post,postID: this.post.id}}" @click.native="setTargetPost">
+    <div class="post-item" @click="setTargetPost">
       <!-- <div class="post-item">
         <div class="post-img">
           <img :src="this.post.attributes.cover" alt="cover">
@@ -13,22 +13,20 @@
           </p>
         </div>
       </div> -->
-      <div class="post-item">
-        <div class="post-item-tag">
-          <span v-for="item in this.post.attributes.tags" :key="item.id">{{item.attributes.tag}}</span>
-        </div>
-        <div class="post-item-title">
-          <h2>{{this.post.attributes.title}}</h2>
-        </div>
-        <div class="post-item-abstract">
-          <p>{{this.post.attributes.abstract}}</p>
-        </div>
-        <img class="post-item-cover" :src="this.post.attributes.cover">
-        <div class="post-item-createdAt">
-          <span>{{this.post.createdAt}}</span>
-        </div>
+      <div class="post-item-tag">
+        <span v-for="item in this.post.attributes.tags" :key="item.id">{{item.attributes.tag}}</span>
       </div>
-    </router-link>
+      <div class="post-item-title">
+        <h2>{{this.post.attributes.title}}</h2>
+      </div>
+      <div class="post-item-abstract">
+        <p>{{this.post.attributes.abstract}}</p>
+      </div>
+      <img class="post-item-cover" :src="this.post.attributes.cover">
+      <div class="post-item-createdAt">
+        <span>{{this.post.createdAt}}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -45,7 +43,12 @@ export default {
   },
   methods: {
     setTargetPost() {
+      console.log(1);
       this.$store.dispatch("setCurrentPost", this.post);
+      this.$router.push({
+        name: "Article",
+        params: { post: this.post, postID: this.post.id }
+      });
     }
   }
 };
@@ -53,7 +56,95 @@ export default {
 
 <style lang="less">
 .post-item {
-  margin: 16px auto;
+  margin: 24px auto;
+  color: #fff;
+}
+@media only screen and (min-width: 769px) {
+  .post-item {
+    color: #cacacade;
+    position: relative;
+    height: 240px;
+    width: 70%;
+    border-radius: 8px;
+    overflow: hidden;
+    &:hover {
+      color: #fff;
+      text-shadow: 2px 2px 1px #000000;
+      cursor: pointer;
+      transition: all 0.1s;
+      -webkit-box-shadow: 1px 7px 20px 3px #474747;
+      box-shadow: 1px 7px 20px 3px #474747;
+      .post-item-title {
+        top: 45%;
+      }
+      .post-item-abstract {
+        opacity: 1;
+        transition: all 0.3s;
+      }
+      .post-item-cover {
+        filter: brightness(0.6) blur(2px);
+      }
+    }
+    .post-item-cover {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      transform: translate(0%, -50%);
+      z-index: -1;
+      filter: brightness(0.5);
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .post-item-title {
+      font-size: 40px;
+      line-height: 40px;
+      text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.3s;
+    }
+    .post-item-tag {
+      padding: 16px;
+      span {
+        margin-right: 8px;
+        padding: 4px 8px;
+        border-radius: 8px;
+        background-color: #8d8d8d62;
+      }
+    }
+    .post-item-createdAt {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 16px;
+    }
+    .post-item-abstract {
+      opacity: 0;
+      position: absolute;
+      width: 80%;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      p {
+        font-size: 20px;
+        line-height: 28px;
+        padding: 4px;
+        letter-spacing: 1px;
+        color: #c0c0c0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 481px) and (max-width: 768px) {
@@ -61,7 +152,6 @@ export default {
     font-size: 16px;
     line-height: 16px;
     padding: 8px;
-    color: #fff;
     text-shadow: 1px 1px 2px #000000b2;
     width: 576px;
     height: 288px;

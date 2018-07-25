@@ -1,6 +1,6 @@
 <template>
-  <div class="postsList-wrapper">
-    <div>
+  <div>
+    <div class="postsList-wrapper">
       <transition-group name="list" class="posts-list">
         <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
       </transition-group>
@@ -51,5 +51,11 @@ export default {
 /* .list-leave-active for below version 2.1.8 */ {
   opacity: 0;
   transform: translateY(30px);
+}
+
+@media only screen and (min-width: 769px){
+  .postsList-wrapper {
+   padding: 0 24px; 
+  }
 }
 </style>

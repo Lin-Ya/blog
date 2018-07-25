@@ -16,11 +16,11 @@
     </ul>
     <ul class="nav-mobile clearfix">
       <li class="nav-menu">
-        <icon @click="showMenu">
+        <i @click="showMenu">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-ego-menu"></use>
           </svg>
-        </icon>
+        </i>
         <ul class="clearfix" v-if="this.menuStatus">
           <li>
             <router-link :to="{name:'Tags'}">TAGS</router-link>

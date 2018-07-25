@@ -1,6 +1,5 @@
 <template>
   <div class="tags">
-    这是tags列表组件
     <div class="tags-list">
       <ul>
         <li v-for="tagItem in this.tagsList" :key="tagItem.id" class="tags-item">
@@ -8,9 +7,7 @@
         </li>
       </ul>
     </div>
-    <div>
-      <PostsList/>
-    </div>
+    <PostsList class="posts-list"/>
   </div>
 </template>
 

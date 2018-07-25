@@ -42,14 +42,18 @@ export default {
   .home {
     font-size: 16px;
     line-height: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     header {
-      height: 80px;
+      height: 72px;
       &.fixed {
         position: fixed;
       }
     }
     main {
-      border: 1px solid red;
+      flex: 1;
+      overflow: hidden;
     }
     footer {
       height: 24px;

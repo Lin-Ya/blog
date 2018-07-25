@@ -56,7 +56,7 @@ export default {
 
 <style lang="less">
 .post-item {
-  margin: 24px auto;
+  margin: 0 auto 24px auto;
   color: #fff;
 }
 @media only screen and (min-width: 769px) {

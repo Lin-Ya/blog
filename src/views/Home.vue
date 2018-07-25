@@ -53,10 +53,11 @@ export default {
     }
     main {
       flex: 1;
+      height: calc(100vh - 104px);
       overflow: hidden;
     }
     footer {
-      height: 24px;
+      height: 32px;
     }
   }
 }

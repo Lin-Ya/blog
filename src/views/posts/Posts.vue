@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="post-wrapper">
     <router-view/>
   </div>
 </template>
@@ -22,4 +22,7 @@ export default {
 </script>
 
 <style lang="less">
+.post-wrapper {
+  height: 100%;
+}
 </style>

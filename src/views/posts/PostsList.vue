@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <div class="postsList-wrapper">
+  <div class="postsList-wrapper">
+    <div>
       <transition-group name="list" class="posts-list">
         <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
       </transition-group>
     </div>
-    <Paging ref="Paging" :now="this.$store.getters.nowPost" :total="this.$store.getters.totalPost" :each="3" />
+    <Paging class="paging-wrapper" ref="Paging" :now="this.$store.getters.nowPost" :total="this.$store.getters.totalPost" :each="3" />
   </div>
 </template>
 
@@ -53,9 +53,11 @@ export default {
   transform: translateY(30px);
 }
 
-@media only screen and (min-width: 769px){
+@media only screen and (min-width: 769px) {
   .postsList-wrapper {
-   padding: 0 24px; 
+    height: 100%;
+    padding: 0 24px;
+    position: relative;
   }
 }
 </style>

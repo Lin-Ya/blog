@@ -1,7 +1,15 @@
 <template>
   <div class="paging">
-    <button @click="pre">Pre</button>
-    <button @click="next">Next</button>
+    <i @click="pre" id="paging_btn_pre" v-show="this.pageNow !== 1">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-previous"></use>
+      </svg>
+    </i>
+    <i @click="next" id="paging_btn_next" v-show="this.pageNow !== this.pageAll">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-next"></use>
+      </svg>
+    </i>
     <p>
       <span>{{this.pageNow}}</span> of
       <span>{{this.pageAll}}</span>
@@ -13,16 +21,14 @@
 export default {
   props: ["now", "total", "each"],
   data() {
-    return {
-      
-    };
+    return {};
   },
   computed: {
     pageAll() {
       return Math.ceil(this.total / this.each);
     },
-    pageNow(){
-      return this.now
+    pageNow() {
+      return this.now;
     }
   },
   methods: {
@@ -46,4 +52,37 @@ export default {
 </script>
 
 <style lang="less">
+.paging {
+  width: 200px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  i {
+    padding: 8px;
+    &:hover {
+      cursor: pointer;
+    }
+    .icon {
+      font-size: 24px;
+      fill: #5a5a5a;
+    }
+  }
+  #paging_btn_pre {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  #paging_btn_next {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+  }
+  p {
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: bold;
+  }
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="post-wrapper">
+  <div>
     <router-view/>
   </div>
 </template>
@@ -22,6 +22,4 @@ export default {
 </script>
 
 <style lang="less">
-.post-wrapper {
-}
 </style>

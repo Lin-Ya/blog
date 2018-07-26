@@ -38,15 +38,24 @@ export default {
   overflow: hidden;
 }
 //home layout
+.home {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  main {
+    flex: 1;
+  }
+}
+
 @media (min-width: 769px) {
   .home {
     font-size: 16px;
     line-height: 16px;
-    header {
-      height: 72px;
-      &.fixed {
-        position: fixed;
-      }
+  }
+  header {
+    height: 72px;
+    &.fixed {
+      position: fixed;
     }
   }
 }

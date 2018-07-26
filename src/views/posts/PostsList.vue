@@ -45,7 +45,6 @@ export default {
 
 @media only screen and (min-width: 769px) {
   .postsList-wrapper {
-    height: calc(100vh - 104px);
     padding: 0 24px;
   }
 }

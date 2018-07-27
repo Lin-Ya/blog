@@ -40,7 +40,7 @@ export default {
 @media (max-width: 768px) {
   .tag-wrapper {
     button {
-      font-size: 16px;
+      font-size: 14px;
       line-height: 24px;
       padding: 4px 8px;
       background-color: #fff;

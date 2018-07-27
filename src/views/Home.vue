@@ -44,6 +44,9 @@ export default {
   flex-direction: column;
   main {
     flex: 1;
+    .posts-wrapper {
+      height: 100%;
+    }
   }
 }
 

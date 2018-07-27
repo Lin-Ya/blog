@@ -26,7 +26,7 @@
 
 <script>
 import marked from "marked";
-import 'github-markdown-css'
+
 export default {
   name: "markdown-editor",
   props: ["updateData"],

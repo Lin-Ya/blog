@@ -1,17 +1,18 @@
 <template>
   <div class="article-wrapper">
-    <div class="article">
-      <div id="article_tagsList">
-        <TagsButton v-for="tagItem in this.currentPost.tags" :key="tagItem.id" :propTag="tagItem" @getPostByTag="linkToTags($event)" />
-      </div>
-      <div>
-        <button class="article-editor" v-if="this.currentPost.owner.id === this.currentUserID" @click="linkToMarkDownEditor">编辑</button>
-      </div>
-      <div id="article_title">
-        <h1>{{this.currentPost.article.attributes.title}}</h1>
-      </div>
-      <div id="article_content" v-html=" Marked(this.currentPost.article.attributes.content)"></div>
+    <div class="article-cover">
+      <img :src="this.currentPost.cover">
     </div>
+    <div class="article-header">
+      <h1>{{this.currentPost.article.attributes.title}}</h1>
+      <button class="article-editor" v-if="this.currentPost.owner.id === this.currentUserID" @click="linkToMarkDownEditor">编辑</button>
+      <ul class="article-tagsList">
+        <li>
+          <TagsButton v-for="tagItem in this.currentPost.tags" :key="tagItem.id" :propTag="tagItem" @getPostByTag="linkToTags($event)" />
+        </li>
+      </ul>
+    </div>
+    <div class="article-content markdown-body" v-html=" Marked(this.currentPost.article.attributes.content)"></div>
   </div>
 </template>
 
@@ -44,9 +45,7 @@ export default {
     TagsButton
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   props: ["postID"],
   created() {
@@ -68,7 +67,7 @@ export default {
     },
     currentPost() {
       return this.$store.getters.getCurrentPost;
-    },
+    }
   },
   methods: {
     linkToTags(targetTagID) {
@@ -79,18 +78,20 @@ export default {
         postID: this.postID,
         oldArticle: this.currentPost.article.attributes
       };
-      updateData.oldArticle.id = this.currentPost.article.id
+      updateData.oldArticle.id = this.currentPost.article.id;
       this.$router.push({
         name: "Mdeditor",
         params: { updateData }
       });
     },
-    Marked(obj){
-      return marked(obj)
+    Marked(obj) {
+      return marked(obj);
     }
   }
 };
 </script>
 
 <style lang="less">
+.article-wrapper {
+}
 </style>

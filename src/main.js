@@ -7,6 +7,7 @@ import store from '@/store/index'
 
 import 'normalize.css'
 import '@/assets/reset.less'
+import 'github-markdown-css'
 
 Vue.config.productionTip = false
 

@@ -20,3 +20,4 @@ export const SET_TARGETTAG = 'SET_TARGETTAG'  //设置当前需要筛选的targe
 export const SET_POSTSLIST = 'SET_POSTSLIST'  //获取默认的postlist
 export const SET_CURRENTPOST = 'SET_CURRENTPOST' //设置当前浏览的post
 export const SET_NOWPAGE = 'SET_NOWPAGE' //设置当前页码
+export const SET_LOADING = 'SET_LOADING' //设置loading状态

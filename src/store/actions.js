@@ -15,6 +15,7 @@ const actions = {
     this.dispatch('getTagsList')
     this.dispatch('getPostsList')
   },
+
   //user
   loginUser({ commit }, formData) {
     AV.User.logIn(formData.username, formData.password).then(
@@ -142,6 +143,9 @@ const actions = {
     })
   },
   getPostsList({ commit }, targetTagID) {
+    //设置loading状态
+    commit(mutations.SET_LOADING)
+
     return new Promise((resolve, reject) => {
       console.log('getPostsList')
       let config = {

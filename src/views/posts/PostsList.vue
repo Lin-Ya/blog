@@ -1,21 +1,27 @@
 <template>
   <div class="postsList-wrapper">
-    <div>
-      <!-- <transition-group name="list" class="posts-list"> -->
-      <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
-      <!-- </transition-group> -->
-    </div>
-    <Paging v-show="this.postsList" class="paging-wrapper" ref="Paging" :now="this.$store.getters.nowPost" :total="this.$store.getters.totalPost" :each="3" />
+    <transition>
+      <Loading v-show="this.isLoading" class="loading-wrapper" />
+      <div class="postsList" v-show="!this.isLoading">
+        <!-- <transition-group name="list" class="posts-list"> -->
+        <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
+        <!-- </transition-group> -->
+        <Paging v-show="this.postsList.length" class="paging-wrapper" ref="Paging" :now="this.$store.getters.nowPost" :total="this.$store.getters.totalPost" :each="3" />
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import PostsItem from "./PostsItem";
 import Paging from "views/components/Paging";
+import Loading from "views/components/Loading";
+
 export default {
   components: {
     PostsItem,
-    Paging
+    Paging,
+    Loading
   },
   data() {
     return {};
@@ -24,6 +30,9 @@ export default {
   computed: {
     postsList() {
       return this.$store.getters.getCurrentPostsList;
+    },
+    isLoading() {
+      return this.$store.getters.getIsLoading;
     }
   },
   methods: {
@@ -48,7 +57,7 @@ export default {
     padding: 0 24px;
   }
 }
-@media (max-width:768px){
+@media (max-width: 768px) {
   .postsList-wrapper {
     padding: 12px;
   }

@@ -1,8 +1,8 @@
 <template>
   <div class="postsList-wrapper">
-    <transition>
-      <Loading v-show="this.isLoading" class="loading-wrapper" />
-      <div class="postsList" v-show="!this.isLoading">
+    <Loading v-if="!this.isLoading" class="loading-wrapper" />
+    <transition  name="slide-fade">
+      <div class="postsList" v-show="this.isLoading">
         <!-- <transition-group name="list" class="posts-list"> -->
         <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
         <!-- </transition-group> -->
@@ -47,11 +47,6 @@ export default {
 </script>
 
 <style lang="less">
-.list-item {
-  display: inline-block;
-  margin-right: 10px;
-}
-
 @media only screen and (min-width: 769px) {
   .postsList-wrapper {
     padding: 0 24px;
@@ -61,5 +56,17 @@ export default {
   .postsList-wrapper {
     padding: 12px;
   }
+}
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

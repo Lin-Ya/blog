@@ -1,8 +1,8 @@
 <template>
   <div class="postsList-wrapper">
-    <Loading v-if="!this.isLoading" class="loading-wrapper" />
+    <Loading v-if="this.isLoading" class="loading-wrapper" />
     <transition  name="slide-fade">
-      <div class="postsList" v-show="this.isLoading">
+      <div class="postsList" v-show="!this.isLoading">
         <!-- <transition-group name="list" class="posts-list"> -->
         <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
         <!-- </transition-group> -->
@@ -47,9 +47,9 @@ export default {
 </script>
 
 <style lang="less">
-@media only screen and (min-width: 769px) {
+@media (min-width: 769px) {
   .postsList-wrapper {
-    padding: 0 24px;
+    padding: 16px 24px;
   }
 }
 @media (max-width: 768px) {

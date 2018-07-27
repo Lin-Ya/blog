@@ -5,7 +5,7 @@
         <TagsButton :propTag="tagItem"/>
       </li>
     </ul>
-    <PostsList class="posts-list" />
+    <PostsList/>
   </div>
 </template>
 
@@ -20,7 +20,6 @@ export default {
     TagsButton,
     PostsList
   },
-  props: ["targetTagID"],
   data() {
     return {
       currentTagID: {}
@@ -39,12 +38,11 @@ export default {
 </script>
 
 <style lang="less">
-@media (max-width: 768px) {
   .tags-list {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    padding: 0 14px;
   }
-}
 </style>

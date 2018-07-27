@@ -120,6 +120,12 @@ const actions = {
       });
     })
   },
+  setTargetTag({ commit }, tag) {
+    return new Promise(resolve => {
+      commit(mutations.SET_TARGETTAG, tag)
+      resolve()
+    })
+  },
 
   // post
   getCurrentPost({ commit }, targetPostID) {

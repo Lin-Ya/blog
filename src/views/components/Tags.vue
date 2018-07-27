@@ -1,13 +1,11 @@
 <template>
   <div class="tags">
-    <div class="tags-list">
-      <ul>
-        <li v-for="tagItem in this.tagsList" :key="tagItem.id" class="tags-item">
-          <TagsButton :propTag="tagItem" @getPostByTag="getTargetPost($event)" />
-        </li>
-      </ul>
-    </div>
-    <PostsList class="posts-list"/>
+    <ul class="tags-list">
+      <li v-for="tagItem in this.tagsList" :key="tagItem.id" class="tags-item">
+        <TagsButton :propTag="tagItem"/>
+      </li>
+    </ul>
+    <PostsList class="posts-list" />
   </div>
 </template>
 
@@ -24,20 +22,11 @@ export default {
   },
   props: ["targetTagID"],
   data() {
-    return {};
+    return {
+      currentTagID: {}
+    };
   },
   created() {
-    // this.targetTagID
-    //   ? this.getTargetPost(this.tagsList)
-    //   : this.getTargetPost(this.tagsList[4].id);
-    if(this.targetTagID){
-      this.getTargetPost(this.targetTagID)
-    }else {
-      while (this.tagsList.length>0) {
-        this.getTargetPost(this.tagsList[4].id);
-        break
-      }
-    }
   },
   computed: {
     tagsList() {
@@ -45,12 +34,17 @@ export default {
     }
   },
   methods: {
-    getTargetPost($event) {
-      this.$store.dispatch("getPostsList", $event);
-    }
   }
 };
 </script>
 
 <style lang="less">
+@media (max-width: 768px) {
+  .tags-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
 </style>

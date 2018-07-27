@@ -14,6 +14,7 @@ export const CLEAR_TEMPPOSTARTICLE = 'CLEAR_TEMPPOSTARTICLE'
 
 //tag
 export const GET_TAGSLIST = 'GET_TAGSLIST'
+export const SET_TARGETTAG = 'SET_TARGETTAG'  //设置当前需要筛选的targettag
 
 //post
 export const SET_POSTSLIST = 'SET_POSTSLIST'  //获取默认的postlist

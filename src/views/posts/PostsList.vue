@@ -48,4 +48,9 @@ export default {
     padding: 0 24px;
   }
 }
+@media (max-width:768px){
+  .postsList-wrapper {
+    padding: 12px;
+  }
+}
 </style>

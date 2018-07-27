@@ -1,22 +1,27 @@
-import { GET_TAGSLIST } from '../mutations'
+import { GET_TAGSLIST, SET_TARGETTAG} from '../mutations'
 
 const state = {
-  tagsList: []
+  tagsList: [],
+  currentTag:{}
 }
 
 const mutations = {
   [GET_TAGSLIST](state,payload){
     console.log(payload)
     state.tagsList = payload
+    state.currentTag = state.tagsList[0]
   },
-  // [UPDATE_EDITINGARTICLETAG](state,payload){
-
-  // }
+  [SET_TARGETTAG](state,targetTag){
+    state.currentTag = targetTag
+  }
 }
 
 const getters = {
   tagsList(state){
     return state.tagsList
+  },
+  getCurrentTag(state){
+    return state.currentTag
   }
 }
 

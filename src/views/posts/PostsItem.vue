@@ -90,10 +90,7 @@ export default {
       transform: translate(0%, -50%);
       z-index: -1;
       filter: brightness(0.5);
-      img {
-        width: 100%;
-        height: 100%;
-      }
+      width: 100%;
     }
     .post-item-title {
       font-size: 40px;
@@ -162,6 +159,9 @@ export default {
       height: 100%;
       z-index: -1;
       filter: brightness(0.85);
+      img {
+        width: 100%;
+      }
     }
     .post-item-tag {
       padding: 8px;

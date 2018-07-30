@@ -10,7 +10,7 @@
       </ul>
       <img :src="this.currentPost.cover">
     </div>
-    <!-- <button class="article-editor" v-if="this.currentPost.owner.id === this.currentUserID" @click="linkToMarkDownEditor">编辑</button> -->
+    <button class="article-editor" v-if="this.currentPost.owner.id === this.currentUserID" @click="linkToMarkDownEditor">编辑</button>
     <div class="article-content markdown-body" v-html=" Marked(this.currentPost.article.attributes.content)"></div>
   </div>
 </template>

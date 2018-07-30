@@ -1,25 +1,28 @@
 <template>
-  <div>
-    <!-- 按钮组 -->
-    <div class="button-group">
-      <button id="pushButton" @click="push">发布</button>
-      <button id="saveButton" @click="save">暂存</button>
-      <button id="clearButton" @click="clear">清空</button>
+  <div class="mdeditor-wrapper">
+    <div class="mdeditor-buttons">
+      <button>发布</button>
+      <button>暂存</button>
+      <button>清空</button>
     </div>
-    <!-- 文本编辑组 -->
-    <div class="markdown-editor">
-      <label for="article_title">标题<input id="article_title" type="text" v-model="article.title"></label>
-      <label for="article_cover">封面<input type="file" name="cover" id="article_cover" @change="uploadImg($event)"></label>
-      <label for="article_tags">标签<input id="article_tags" type="text" ref="tagsInput" @keypress.enter="addTags"></label>
-      <div class="tags_group">
-        <span v-for="index in this.article.tags" :key="index"> {{index}} </span>
+    <div class="mdeditor-inputs">
+      <div class="title-input">
+        <label for="title">标题：<input name="title" type="text" placeholder="填写文章标题"></label>
+        <a>添加封面<input type="file" name="cover" id="article_cover"></a>
       </div>
-      <!-- 封面 -->
-      <!-- <img :src="this.article.cover"> -->
-      <textarea name="content" id="article_content" placeholder="正文" cols="30" rows="10" v-model="article.content"></textarea>
+      <div class="tags-input">
+        <label for="tags">标签：<input name="tags" type="text" placeholder="输入并按回车完成添加"></label>
+        <ul>
+          <li>标签一</li>
+          <li>标签二</li>
+          <li>标签三</li>
+        </ul>
+      </div>
     </div>
-    <div class="markdown-preview">
-      <div id="content_preview" class="markdown-body" v-html="previewContent"></div>
+    <div class="mdeditor-content">
+      <p class="content-input content" contenteditable="true">请输入正文</p>
+      <div class="content-preview content markdown-body">
+      </div>
     </div>
   </div>
 </template>
@@ -36,7 +39,7 @@ export default {
 
     if (this.updateData) {
       this.editorStatus = "edit";
-      Object.assign(this.article,this.updateData.oldArticle)
+      Object.assign(this.article, this.updateData.oldArticle);
     } else {
       //判断是否有暂存文章
       let tempArticle = localStorage.getItem("tempArticle");
@@ -61,8 +64,8 @@ export default {
     };
   },
   computed: {
-    previewContent(){
-      return marked(this.article.content)
+    previewContent() {
+      return marked(this.article.content);
     }
   },
   methods: {
@@ -85,11 +88,11 @@ export default {
       Object.assign(pushData, this.article);
       pushData.title = pushData.title.trim();
       pushData.content = pushData.content.trim();
-      pushData.abstract = pushData.content.slice(0, 100);
-      if(this.updateData){
-        pushData.postID = this.updateData.postID
-      }else {
-        pushData.postID = ''
+      pushData.abstract = pushData.content.slice(0, 30);
+      if (this.updateData) {
+        pushData.postID = this.updateData.postID;
+      } else {
+        pushData.postID = "";
       }
 
       this.$store.dispatch("pushPost", pushData);
@@ -105,7 +108,7 @@ export default {
       for (let key in this.article) {
         this.article[key] = "";
       }
-      this.article.tags = []
+      this.article.tags = [];
       localStorage.removeItem("tempArticle");
     },
     uploadImg(e) {
@@ -136,6 +139,174 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="less">
+.mdeditor-wrapper {
+  padding: 0 24px;
+  .mdeditor-buttons {
+    button {
+      cursor: pointer;
+      border: 1px solid black;
+      color: black;
+      background-color: #fff;
+      font-size: 16px;
+      line-height: 16px;
+      padding: 8px 16px;
+      border-radius: 5px;
+      &:hover {
+        background-color: black;
+        color: #fff;
+        transition: all 0.3s;
+      }
+    }
+  }
+  .mdeditor-inputs {
+    label {
+      margin-right: 16px;
+    }
+    .title-input {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      a {
+        position: relative;
+        color: #fff;
+        background-color: #79b6f0;
+        display: inline-block;
+        overflow: hidden;
+        text-align: center;
+        padding: 4px 16px;
+        border-radius: 16px;
+        input {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          opacity: 0;
+        }
+      }
+    }
+  }
+}
 
+@media (min-width: 769px) {
+  .mdeditor-wrapper {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: 1px;
+    .mdeditor-inputs {
+      padding: 8px 0;
+      label {
+        margin-right: 16px;
+        input {
+          padding: 4px 16px;
+        }
+      }
+      .tags-input {
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+        ul {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          li {
+            text-align: center;
+            padding: 4px 16px;
+            margin: 0 8px;
+            border-radius: 16px;
+            background-color: rgb(98, 98, 98);
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            &::after {
+              display: block;
+              content: "删除";
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              padding: 4px 16px;
+              border-radius: 16px;
+              background-color: red;
+              color: #fff;
+              opacity: 0;
+              transition: all 0.3s;
+            }
+            &:hover {
+              &::after {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+    }
+    .mdeditor-content {
+      flex: 1;
+      display: flex;
+      padding-top: 16px;
+      font-size: 16px;
+      line-height: 24px;
+      .content-input {
+        width: 50%;
+        border: 1px solid #a19191;
+        padding: 8px;
+      }
+      .content-preview {
+        border: 1px solid #a19191;
+        padding: 8px;
+        flex: 1;
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  .mdeditor-wrapper {
+    font-size: 0.2857rem;
+    line-height: 0.3333rem;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: 1px;
+    .mdeditor-inputs {
+      padding: 16px 0;
+      .tags-input {
+        margin-top: 8px;
+        ul {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 8px;
+          li {
+            padding: 4px 6px;
+            background-color: #5a5a5a;
+            color: #fff;
+          }
+        }
+      }
+    }
+    .mdeditor-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      .content {
+        border: 1px solid #a19191;
+        padding: 4px;
+      }
+      .content-input {
+        height: 50%;
+      }
+      .content-preview {
+        flex: 1;
+      }
+    }
+  }
+}
 </style>

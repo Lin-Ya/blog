@@ -87,7 +87,6 @@ export default {
       top: 0;
       right: 0;
       bottom: 0;
-      transform: translate(0%, -50%);
       z-index: -1;
       filter: brightness(0.5);
       width: 100%;

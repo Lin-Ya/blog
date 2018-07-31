@@ -18,14 +18,16 @@ const actions = {
 
   //user
   loginUser({ commit }, formData) {
-    AV.User.logIn(formData.username, formData.password).then(
-      function (loginedUser) {
-        commit(mutations.LOGIN_USER, loginedUser);
-      },
-      function (error) {
-        console.log(JSON.stringify(error));
-      }
-    );
+    return new Promise ((resolve,rejects)=>{
+      AV.User.logIn(formData.username, formData.password).then(
+        function (loginedUser) {
+          commit(mutations.LOGIN_USER, loginedUser);
+        },
+        function (error) {
+          rejects(error)
+        }
+      );
+    })
   },
   logoutUser({ commit }) {
     AV.User.logOut()

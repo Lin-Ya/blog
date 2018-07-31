@@ -5,8 +5,8 @@ import App from './App'
 import router from './router'
 import store from '@/store/index'
 
-import 'normalize.css'
 import '@/assets/reset.less'
+import 'normalize.css'
 import 'github-markdown-css'
 
 Vue.config.productionTip = false

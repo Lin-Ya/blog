@@ -91,7 +91,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .article-wrapper {
   letter-spacing: 1px;
   .article-header {
@@ -109,6 +109,28 @@ export default {
     justify-content: center;
     align-items: center;
     padding: 4px;
+  }
+  .article-content {
+    ul {
+      list-style-type: disc;
+      list-style-position: inside;
+    }
+    ol {
+      list-style-type: decimal;
+      list-style-position: inside;
+    }
+    ul ul,
+    ol ul {
+      list-style-type: circle;
+      list-style-position: inside;
+      margin-left: 15px;
+    }
+    ol ol,
+    ul ol {
+      list-style-type: lower-latin;
+      list-style-position: inside;
+      margin-left: 15px;
+    }
   }
 }
 

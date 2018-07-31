@@ -1,27 +1,25 @@
 <template>
   <div class="mdeditor-wrapper">
     <div class="mdeditor-buttons">
-      <button>发布</button>
-      <button>暂存</button>
-      <button>清空</button>
+      <button @click="push">发布</button>
+      <button @click="save">暂存</button>
+      <button @click="clear">清空</button>
     </div>
     <div class="mdeditor-inputs">
       <div class="title-input">
-        <label for="title">标题：<input name="title" type="text" placeholder="填写文章标题"></label>
-        <a>添加封面<input type="file" name="cover" id="article_cover"></a>
+        <label for="title">标题：<input name="title" type="text" placeholder="填写文章标题" v-model="article.title"></label>
+        <a>添加封面<input type="file" name="cover" id="article_cover" @change="uploadImg($event)"></a>
       </div>
       <div class="tags-input">
-        <label for="tags">标签：<input name="tags" type="text" placeholder="输入并按回车完成添加"></label>
-        <ul>
-          <li>标签一</li>
-          <li>标签二</li>
-          <li>标签三</li>
+        <label for="tags">标签：<input name="tags" type="text" placeholder="输入并按回车完成添加" ref="tagsInput" @keypress.enter="addTags"></label>
+        <ul class="tags-group">
+          <li v-for="(item,index) in this.article.tags" :key="index" @click="deleTags(index)">{{item}}</li>
         </ul>
       </div>
     </div>
     <div class="mdeditor-content">
-      <p class="content-input content" contenteditable="true">请输入正文</p>
-      <div class="content-preview content markdown-body">
+      <textarea class="content-input content" id="article_content" v-model="article.content"></textarea>
+      <div class="content-preview content markdown-body" v-html="previewContent">
       </div>
     </div>
   </div>
@@ -133,6 +131,12 @@ export default {
         this.article.tags.push(tag);
         this.$refs.tagsInput.value = "";
       }
+    },
+    deleTags(index) {
+      this.article.tags.splice(index, 1);
+    },
+    changeText() {
+      this.article.content = this.$refs.edit.innerHTML;
     }
   }
 };
@@ -187,6 +191,30 @@ export default {
       }
     }
   }
+  .mdeditor-content {
+    .content-preview {
+      ul {
+        list-style-type: disc;
+        list-style-position: inside;
+      }
+      ol {
+        list-style-type: decimal;
+        list-style-position: inside;
+      }
+      ul ul,
+      ol ul {
+        list-style-type: circle;
+        list-style-position: inside;
+        margin-left: 15px;
+      }
+      ol ol,
+      ul ol {
+        list-style-type: lower-latin;
+        list-style-position: inside;
+        margin-left: 15px;
+      }
+    }
+  }
 }
 
 @media (min-width: 769px) {
@@ -224,7 +252,7 @@ export default {
             position: relative;
             &::after {
               display: block;
-              content: "删除";
+              content: "X";
               position: absolute;
               top: 0;
               left: 0;
@@ -252,20 +280,38 @@ export default {
       font-size: 16px;
       line-height: 24px;
       .content-input {
+        border: 1px solid #a19191;
+        padding: 8px;
+        height: 100%;
+        flex: 1;
+      }
+      .content-preview {
         width: 50%;
         border: 1px solid #a19191;
         padding: 8px;
-      }
-      .content-preview {
-        border: 1px solid #a19191;
-        padding: 8px;
-        flex: 1;
       }
     }
   }
 }
 @media (max-width: 768px) {
   .mdeditor-wrapper {
+    .mdeditor-buttons {
+      button {
+        cursor: pointer;
+        border: 1px solid black;
+        color: black;
+        background-color: #fff;
+        font-size: 0.381rem;
+        line-height: 0.381rem;
+        padding: 0.1905rem 0.381rem;
+        border-radius: 5px;
+        &:hover {
+          background-color: black;
+          color: #fff;
+          transition: all 0.3s;
+        }
+      }
+    }
     font-size: 0.2857rem;
     line-height: 0.3333rem;
     height: 100%;
@@ -301,10 +347,10 @@ export default {
         padding: 4px;
       }
       .content-input {
-        height: 50%;
+        flex: 1;
       }
       .content-preview {
-        flex: 1;
+        height: 50%;
       }
     }
   }

@@ -7,7 +7,7 @@ const state = {
 
 const mutations = {
   [GET_TAGSLIST](state,payload){
-    console.log(payload)
+
     state.tagsList = payload
     state.currentTag = state.tagsList[0]
   },

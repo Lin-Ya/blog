@@ -47,7 +47,6 @@ export default {
   },
   methods: {
     logIn() {
-      console.log("我要登录啦");
       this.$store.dispatch("loginUser", this.formData).catch(error=>{
         this.errorMsg = getErrorMessage(error.code)
       });

@@ -34,7 +34,6 @@ export default {
   },
   methods: {
     setTargetPost() {
-      console.log(1);
       this.$store.dispatch("setCurrentPost", this.post);
       this.$router.push({
         name: "Article",

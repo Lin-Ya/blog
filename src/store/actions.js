@@ -18,7 +18,7 @@ const actions = {
 
   //user
   loginUser({ commit }, formData) {
-    return new Promise ((resolve,rejects)=>{
+    return new Promise((resolve, rejects) => {
       AV.User.logIn(formData.username, formData.password).then(
         function (loginedUser) {
           commit(mutations.LOGIN_USER, loginedUser);
@@ -99,13 +99,11 @@ const actions = {
     let _this = this
     Post.save().then(
       function (res) {
-        console.log('uploadPost_res')
-        console.log(res)
         _this.dispatch('getTagsList')
         _this.dispatch('getPostsList')
       },
       function (error) {
-        console.log(JSON.stringify(error))
+        alert(JSON.stringify(error))
       }
     )
   },
@@ -182,21 +180,6 @@ const actions = {
   setCurrentPost({ commit }, currentPost) {
     commit(mutations.SET_CURRENTPOST, currentPost)
   }
-
-  //article
-  // getArticle({ commit }, articleID) {
-  //   return new Promise((resolve, reject) => {
-  //     let query = new AV.Query('Article')
-  //     query.get(articleID).then(function (res) {
-  //       commit(mutations.SET_ARTICLE, res)
-  //       resolve()
-  //     }, function (error) {
-  //       console.log(error)
-  //       reject()
-  //     })
-  //   })
-  // }
-
 }
 
 export default actions

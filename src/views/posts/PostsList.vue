@@ -3,9 +3,7 @@
     <Loading v-if="this.isLoading" class="loading-wrapper" />
     <transition  name="slide-fade">
       <div class="postsList" v-show="!this.isLoading">
-        <!-- <transition-group name="list" class="posts-list"> -->
         <PostsItem v-for="post in this.postsList" :key="post.id" :propPost="post" />
-        <!-- </transition-group> -->
         <Paging v-show="this.postsList.length" class="paging-wrapper" ref="Paging" :now="this.$store.getters.nowPost" :total="this.$store.getters.totalPost" :each="3" />
       </div>
     </transition>

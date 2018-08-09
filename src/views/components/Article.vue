@@ -50,11 +50,10 @@ export default {
   props: ["postID"],
   created() {
     this.currentPost.id
-      ? console.log("1")
+      ? console.log(this.currentPost.id)
       : this.$store.dispatch("getCurrentPost", this.postID).then(res => {
           this.$store.dispatch("setCurrentPost", res);
         });
-    //调用方法给这条post的read增加1
   },
   computed: {
     currentUserID() {

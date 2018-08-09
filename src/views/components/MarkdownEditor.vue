@@ -120,7 +120,6 @@ export default {
         return;
       }
       reader.readAsDataURL(file);
-      console.log(reader);
       reader.onload = function(event) {
         _this.article.cover = event.target.result;
       };

@@ -11,6 +11,9 @@
         <router-link :to="{name:'Mdeditor'}">EDITOR</router-link>
       </li>
       <li>
+        <a href="http://me.fengxiaoyong.work/dist/index.html" target="blank">ABOUTME</a>
+      </li>
+      <li>
         <router-link :to="{name:'Account'}">LOGIN</router-link>
       </li>
     </ul>
